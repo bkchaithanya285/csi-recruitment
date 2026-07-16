@@ -53,7 +53,7 @@ export default function ExportPanel({ allApplicants, filteredApplicants }) {
       }));
       ws["!cols"] = colWidths;
 
-      const fileName = `KARE_IEEE_Applicants_${exportType === "all" ? "All" : "Filtered"}_${Date.now()}.xlsx`;
+      const fileName = `CSI_KARE_Applicants_${exportType === "all" ? "All" : "Filtered"}_${Date.now()}.xlsx`;
       XLSX.writeFile(wb, fileName);
       addToast(`Successfully downloaded Excel sheet!`, "success");
     } catch (error) {
@@ -77,13 +77,13 @@ export default function ExportPanel({ allApplicants, filteredApplicants }) {
       });
 
       // Branded Title Header
-      doc.setFillColor(0, 98, 155); // IEEE Blue
+      doc.setFillColor(128, 0, 0); // CSI Maroon
       doc.rect(0, 0, 297, 28, "F");
 
       doc.setTextColor(255, 255, 255);
       doc.setFontSize(16);
       doc.setFont("helvetica", "bold");
-      doc.text("KARE IEEE EDUCATION SOCIETY RECRUITMENT REPORT", 14, 12);
+      doc.text("CSI KARE STUDENT CHAPTER RECRUITMENT REPORT", 14, 12);
       
       doc.setFontSize(9);
       doc.setFont("helvetica", "normal");
@@ -113,7 +113,7 @@ export default function ExportPanel({ allApplicants, filteredApplicants }) {
         body: data,
         theme: "grid",
         headStyles: {
-          fillColor: [0, 98, 155],
+          fillColor: [128, 0, 0],
           textColor: [255, 255, 255],
           fontSize: 8,
           fontStyle: "bold",
@@ -124,7 +124,7 @@ export default function ExportPanel({ allApplicants, filteredApplicants }) {
           textColor: [50, 50, 50]
         },
         alternateRowStyles: {
-          fillColor: [245, 248, 252]
+          fillColor: [255, 248, 245]
         },
         columnStyles: {
           Name: { cellWidth: 26 },
@@ -150,11 +150,11 @@ export default function ExportPanel({ allApplicants, filteredApplicants }) {
           // Page number on right
           doc.text(str, doc.internal.pageSize.width - 20, doc.internal.pageSize.height - 10);
           // Branding on left
-          doc.text("KARE IEEE EDUCATION SOCIETY — Web Team", 10, doc.internal.pageSize.height - 10);
+          doc.text("CSI KARE STUDENT CHAPTER — Web Team", 10, doc.internal.pageSize.height - 10);
         }
       });
 
-      const fileName = `KARE_IEEE_Applicants_${exportType === "all" ? "All" : "Filtered"}_${Date.now()}.pdf`;
+      const fileName = `CSI_KARE_Applicants_${exportType === "all" ? "All" : "Filtered"}_${Date.now()}.pdf`;
       doc.save(fileName);
       addToast(`Successfully downloaded PDF report!`, "success");
     } catch (error) {
@@ -164,11 +164,11 @@ export default function ExportPanel({ allApplicants, filteredApplicants }) {
   };
 
   return (
-    <div className="glass-panel p-5 border-white/5 flex flex-col md:flex-row items-center justify-between gap-4 bg-[#0A192F]/40">
+    <div className="glass-panel-dark p-5 border-white/10 flex flex-col md:flex-row items-center justify-between gap-4 bg-[#1E0000]/20">
       
       {/* Label and selector */}
       <div className="flex flex-col sm:flex-row items-center gap-3">
-        <div className="p-2.5 rounded-lg bg-ieee-blue/15 text-ieee-accent border border-ieee-blue/20">
+        <div className="p-2.5 rounded-lg bg-[#800000]/10 text-[#FF6B00] border border-[#800000]/20">
           <FaDownload size={16} />
         </div>
         <div className="text-center sm:text-left">
@@ -186,7 +186,7 @@ export default function ExportPanel({ allApplicants, filteredApplicants }) {
             onClick={() => setExportType("filtered")}
             className={`px-3 py-1.5 rounded-md text-xs font-semibold transition-all ${
               exportType === "filtered"
-                ? "bg-ieee-blue text-white shadow"
+                ? "bg-[#800000] text-white shadow"
                 : "text-slate-400 hover:text-white"
             }`}
           >
@@ -196,7 +196,7 @@ export default function ExportPanel({ allApplicants, filteredApplicants }) {
             onClick={() => setExportType("all")}
             className={`px-3 py-1.5 rounded-md text-xs font-semibold transition-all ${
               exportType === "all"
-                ? "bg-ieee-blue text-white shadow"
+                ? "bg-[#800000] text-white shadow"
                 : "text-slate-400 hover:text-white"
             }`}
           >

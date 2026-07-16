@@ -39,17 +39,17 @@ export async function GET(request) {
     const pageWidth = doc.internal.pageSize.width;
     const pageHeight = doc.internal.pageSize.height;
 
-    // Draw gold/blue double border frame
-    doc.setDrawColor(0, 98, 155); // IEEE Blue
+    // Draw gold/maroon double border frame
+    doc.setDrawColor(128, 0, 0); // CSI Maroon
     doc.setLineWidth(1);
     doc.rect(8, 8, pageWidth - 16, pageHeight - 16);
-    doc.setDrawColor(231, 119, 36); // IEEE Orange
+    doc.setDrawColor(255, 107, 0); // CSI Orange
     doc.setLineWidth(0.5);
     doc.rect(9.5, 9.5, pageWidth - 19, pageHeight - 19);
 
-    // Read logo and signature from local filesystem
+    // Read logo from local filesystem
     try {
-      const logoPath = path.join(process.cwd(), "public", "logo.jpg");
+      const logoPath = path.join(process.cwd(), "public", "csi-logo.jpg");
       if (fs.existsSync(logoPath)) {
         const logoBase64 = fs.readFileSync(logoPath).toString("base64");
         doc.addImage(`data:image/jpeg;base64,${logoBase64}`, "JPEG", (pageWidth - 35) / 2, 15, 35, 25);
@@ -62,7 +62,7 @@ export async function GET(request) {
     doc.setTextColor(15, 23, 42);
     doc.setFont("times", "bold");
     doc.setFontSize(16);
-    doc.text("KARE IEEE EDUCATION SOCIETY", pageWidth / 2, 48, { align: "center" });
+    doc.text("CSI KARE STUDENT CHAPTER", pageWidth / 2, 48, { align: "center" });
 
     doc.setFont("times", "italic");
     doc.setFontSize(9.5);
@@ -83,7 +83,7 @@ export async function GET(request) {
     const appYear = app.timestamp && app.timestamp.toDate 
       ? app.timestamp.toDate().getFullYear() 
       : new Date().getFullYear();
-    const refNumber = `REF: KARE-IEEE-EDS-${appYear}-${app.registrationNumber.substring(app.registrationNumber.length - 4)}`;
+    const refNumber = `REF: CSI-KARE-SC-${appYear}-${app.registrationNumber.substring(app.registrationNumber.length - 4)}`;
     
     const currentDate = new Date().toLocaleDateString("en-IN", {
       day: "2-digit",
@@ -96,7 +96,7 @@ export async function GET(request) {
     doc.line(15, 70, pageWidth - 15, 70);
 
     // Title
-    doc.setTextColor(0, 98, 155);
+    doc.setTextColor(128, 0, 0);
     doc.setFont("times", "bold");
     doc.setFontSize(17);
     doc.text("OFFICIAL APPOINTMENT ORDER", pageWidth / 2, 82, { align: "center" });
@@ -111,16 +111,16 @@ export async function GET(request) {
     doc.setFontSize(11);
     doc.setTextColor(51, 65, 85);
     
-    const body1 = "Based on your performance in the recruitment interviews and evaluations held by the Executive Board, we are pleased to inform you that you have been selected to join the core team of KARE IEEE Education Society for the academic year 2026-2027.";
+    const body1 = "Based on your performance in the recruitment interviews and evaluations held by the Executive Board, we are pleased to inform you that you have been selected to join the core team of CSI KARE Student Chapter for the academic year 2026-2027.";
     const body2 = "You are hereby appointed to the following position with immediate effect:";
 
     let currentY = 101;
     const splitBody1 = doc.splitTextToSize(body1, pageWidth - 30);
-    doc.text(splitBody1, 15, currentY); // Removed justify alignment to prevent border crossing
+    doc.text(splitBody1, 15, currentY); 
     currentY += (splitBody1.length * 6) + 4;
 
     const splitBody2 = doc.splitTextToSize(body2, pageWidth - 30);
-    doc.text(splitBody2, 15, currentY); // Removed justify alignment
+    doc.text(splitBody2, 15, currentY); 
     currentY += (splitBody2.length * 6) + 6;
 
     // Details Box (Adjusted box size to fit 3 items)
@@ -139,10 +139,10 @@ export async function GET(request) {
 
     doc.setTextColor(15, 23, 42);
     doc.text(app.name, pageWidth - 20, boxStartY + 9, { align: "right" });
-    doc.setTextColor(0, 98, 155);
+    doc.setTextColor(128, 0, 0);
     doc.text(app.approvedRole || app.priority1 || "Core Member", pageWidth - 20, boxStartY + 17, { align: "right" });
     doc.setTextColor(15, 23, 42);
-    doc.text("KARE IEEE Education Society", pageWidth - 20, boxStartY + 25, { align: "right" });
+    doc.text("CSI KARE STUDENT CHAPTER", pageWidth - 20, boxStartY + 25, { align: "right" });
 
     currentY = boxStartY + 33 + 8;
 
@@ -154,49 +154,38 @@ export async function GET(request) {
     const body5 = "Congratulations once again! We look forward to an outstanding tenure working together to drive academic and technical excellence.";
 
     const splitBody3 = doc.splitTextToSize(body3, pageWidth - 30);
-    doc.text(splitBody3, 15, currentY); // Removed justify alignment
+    doc.text(splitBody3, 15, currentY); 
     currentY += (splitBody3.length * 6) + 4;
 
     const splitBody4 = doc.splitTextToSize(body4, pageWidth - 30);
-    doc.text(splitBody4, 15, currentY); // Removed justify alignment
+    doc.text(splitBody4, 15, currentY); 
     currentY += (splitBody4.length * 6) + 4;
 
     const splitBody5 = doc.splitTextToSize(body5, pageWidth - 30);
-    doc.text(splitBody5, 15, currentY); // Removed justify alignment
+    doc.text(splitBody5, 15, currentY); 
     currentY += (splitBody5.length * 6) + 8;
 
     // Regards
     doc.setFont("times", "bold");
     doc.setTextColor(15, 23, 42);
     doc.text("Regards,", 15, currentY);
-    doc.setTextColor(0, 98, 155);
-    doc.text("KARE IEEE Education Society", 15, currentY + 5);
+    doc.setTextColor(128, 0, 0);
+    doc.text("CSI KARE STUDENT CHAPTER", 15, currentY + 5);
 
-    // Signature
-    try {
-      const sigPath = path.join(process.cwd(), "public", "signature.jpg");
-      if (fs.existsSync(sigPath)) {
-        const sigBase64 = fs.readFileSync(sigPath).toString("base64");
-        doc.addImage(`data:image/jpeg;base64,${sigBase64}`, "JPEG", (pageWidth - 30) / 2, currentY + 12, 30, 15);
-      }
-    } catch (err) {
-      console.error("Server PDF: Failed to add signature:", err);
-    }
-
+    // Signature metadata line
     doc.setDrawColor(148, 163, 184);
     doc.setLineWidth(0.5);
-    doc.line((pageWidth - 60) / 2, currentY + 30, (pageWidth + 60) / 2, currentY + 30);
+    doc.line((pageWidth - 60) / 2, currentY + 22, (pageWidth + 60) / 2, currentY + 22);
 
     doc.setTextColor(15, 23, 42);
     doc.setFont("times", "bold");
     doc.setFontSize(9.5);
-    doc.text("Dr. P. Chinnasamy", pageWidth / 2, currentY + 34, { align: "center" });
+    doc.text("Dr. P. Pandiselvam", pageWidth / 2, currentY + 26, { align: "center" });
 
     doc.setTextColor(100, 116, 139);
     doc.setFont("times", "normal");
     doc.setFontSize(8.5);
-    doc.text("SBC COUNSELLOR", pageWidth / 2, currentY + 38, { align: "center" });
-    doc.text("KARE IEEE Education Society", pageWidth / 2, currentY + 42, { align: "center" });
+    doc.text("CSI KARE", pageWidth / 2, currentY + 30, { align: "center" });
 
     // Output PDF Buffer
     const pdfBuffer = Buffer.from(doc.output("arraybuffer"));

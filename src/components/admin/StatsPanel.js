@@ -4,7 +4,7 @@ import { FaUsers, FaUserClock, FaUserCheck, FaUserTimes, FaCalendarDay } from "r
 
 export default function StatsPanel({ stats, distributions }) {
   const cards = [
-    { label: "Total Applications", value: stats.total, icon: FaUsers, color: "text-ieee-accent bg-ieee-blue/15 border-ieee-blue/30" },
+    { label: "Total Applications", value: stats.total, icon: FaUsers, color: "text-[#FF6B00] bg-[#800000]/10 border-[#800000]/20" },
     { label: "Applications Today", value: stats.today, icon: FaCalendarDay, color: "text-blue-400 bg-blue-950/20 border-blue-500/20" },
     { label: "Pending Screening", value: stats.pending, icon: FaUserClock, color: "text-amber-400 bg-amber-950/20 border-amber-500/20" },
     { label: "Approved Candidates", value: stats.approved, icon: FaUserCheck, color: "text-emerald-400 bg-emerald-950/20 border-emerald-500/20" },
@@ -25,7 +25,7 @@ export default function StatsPanel({ stats, distributions }) {
           return (
             <div
               key={card.label}
-              className={`glass-panel p-5 border flex flex-col justify-between ${card.color.split(" ")[2] || ""}`}
+              className={`glass-panel-dark p-5 border flex flex-col justify-between ${card.color.split(" ")[2] || ""}`}
             >
               <div className="flex items-center justify-between mb-4">
                 <span className="text-slate-400 text-xs font-semibold uppercase tracking-wider">
@@ -47,8 +47,8 @@ export default function StatsPanel({ stats, distributions }) {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         
         {/* Department Distribution */}
-        <div className="glass-panel p-6">
-          <h4 className="text-white font-extrabold text-sm uppercase tracking-wider mb-6 border-b border-white/5 pb-3">
+        <div className="glass-panel-dark p-6 border-white/10">
+          <h4 className="text-white font-extrabold text-sm uppercase tracking-wider mb-6 border-b border-white/10 pb-3">
             Department Distribution
           </h4>
           <div className="space-y-4">
@@ -58,11 +58,11 @@ export default function StatsPanel({ stats, distributions }) {
                 <div key={dept} className="space-y-2">
                   <div className="flex items-center justify-between text-xs font-semibold">
                     <span className="text-slate-300">{dept}</span>
-                    <span className="text-ieee-accent">{count} ({pct}%)</span>
+                    <span className="text-[#FF6B00]">{count} ({pct}%)</span>
                   </div>
                   <div className="w-full h-2 rounded-full bg-white/5 overflow-hidden">
                     <div
-                      className="h-full rounded-full bg-ieee-accent transition-all duration-500"
+                      className="h-full rounded-full bg-[#FF6B00] transition-all duration-500"
                       style={{ width: `${pct}%` }}
                     />
                   </div>
@@ -73,8 +73,8 @@ export default function StatsPanel({ stats, distributions }) {
         </div>
 
         {/* Year Distribution */}
-        <div className="glass-panel p-6">
-          <h4 className="text-white font-extrabold text-sm uppercase tracking-wider mb-6 border-b border-white/5 pb-3">
+        <div className="glass-panel-dark p-6 border-white/10">
+          <h4 className="text-white font-extrabold text-sm uppercase tracking-wider mb-6 border-b border-white/10 pb-3">
             Year Distribution
           </h4>
           <div className="space-y-4">
@@ -84,11 +84,11 @@ export default function StatsPanel({ stats, distributions }) {
                 <div key={year} className="space-y-2">
                   <div className="flex items-center justify-between text-xs font-semibold">
                     <span className="text-slate-300">{year}</span>
-                    <span className="text-ieee-accent">{count} ({pct}%)</span>
+                    <span className="text-[#FF6B00]">{count} ({pct}%)</span>
                   </div>
                   <div className="w-full h-2 rounded-full bg-white/5 overflow-hidden">
                     <div
-                      className="h-full rounded-full bg-ieee-blue transition-all duration-500"
+                      className="h-full rounded-full bg-[#800000] transition-all duration-500"
                       style={{ width: `${pct}%` }}
                     />
                   </div>
@@ -99,8 +99,8 @@ export default function StatsPanel({ stats, distributions }) {
         </div>
 
         {/* Role Preferences Distribution */}
-        <div className="glass-panel p-6">
-          <h4 className="text-white font-extrabold text-sm uppercase tracking-wider mb-6 border-b border-white/5 pb-3">
+        <div className="glass-panel-dark p-6 border-white/10">
+          <h4 className="text-white font-extrabold text-sm uppercase tracking-wider mb-6 border-b border-white/10 pb-3">
             Role Preferences (Priority 1)
           </h4>
           <div className="space-y-4 max-h-[260px] overflow-y-auto pr-1">
@@ -110,11 +110,11 @@ export default function StatsPanel({ stats, distributions }) {
                 <div key={role} className="space-y-1.5">
                   <div className="flex items-center justify-between text-[11px] font-semibold">
                     <span className="text-slate-300 truncate max-w-[200px]">{role}</span>
-                    <span className="text-ieee-accent shrink-0">{count} ({pct}%)</span>
+                    <span className="text-[#FF6B00] shrink-0">{count} ({pct}%)</span>
                   </div>
                   <div className="w-full h-1.5 rounded-full bg-white/5 overflow-hidden">
                     <div
-                      className="h-full rounded-full bg-gradient-to-r from-ieee-blue to-ieee-accent transition-all duration-500"
+                      className="h-full rounded-full bg-gradient-to-r from-[#800000] to-[#FF6B00] transition-all duration-500"
                       style={{ width: `${pct}%` }}
                     />
                   </div>

@@ -45,10 +45,10 @@ export function AuthProvider({ children }) {
 
   const login = async (email, password) => {
     // Check for dev fallback credentials first
-    if (email === "admin@kareieee.org" && password === "admin123") {
+    if (email === "admin@csikare.org" && password === "admin123") {
       const mockUser = {
         uid: "mock-admin-uid",
-        email: "admin@kareieee.org",
+        email: "admin@csikare.org",
         displayName: "Mock Admin"
       };
       if (typeof window !== "undefined") {

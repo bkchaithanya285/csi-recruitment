@@ -40,7 +40,7 @@ const ROLES = [
   {
     name: "Video Editing Team",
     icon: FaVideo,
-    desc: "Produce event trailers, edit workshop recordings, create aesthetic promotional reels, and manage all video production assets for KARE IEEE EDS."
+    desc: "Produce event trailers, edit workshop recordings, create aesthetic promotional reels, and manage all video production assets for CSI KARE STUDENT CHAPTER."
   },
   {
     name: "Event Coordinators",
@@ -56,24 +56,24 @@ const ROLES = [
 
 export default function Roles() {
   return (
-    <section id="roles" className="py-24 relative overflow-hidden bg-ieee-deep">
+    <section id="roles" className="py-24 relative overflow-hidden bg-transparent">
       
       {/* Decorative ambient background glows */}
-      <div className="absolute top-1/3 left-0 w-[35vw] h-[35vw] rounded-full bg-ieee-blue/5 blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-1/3 right-0 w-[35vw] h-[35vw] rounded-full bg-ieee-accent/5 blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/3 left-0 w-[35vw] h-[35vw] rounded-full bg-[#800000]/5 blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-1/3 right-0 w-[35vw] h-[35vw] rounded-full bg-[#FF6B00]/5 blur-[120px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-30">
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-20" data-aos="fade-up">
-          <h2 className="text-xs font-bold tracking-widest text-ieee-accent uppercase mb-2">
+          <h2 className="text-xs font-bold tracking-widest text-[#FF6B00] uppercase mb-2">
             Explore Opportunities
           </h2>
-          <h3 className="text-3xl sm:text-5xl font-extrabold text-white mb-6">
+          <h3 className="text-3xl sm:text-5xl font-extrabold text-slate-800 mb-6">
             Available Roles
           </h3>
-          <p className="text-slate-300 text-base sm:text-lg">
-            Choose from a wide variety of domains. We encourage applicants to select up to 3 roles based on their interests and career plans.
+          <p className="text-slate-600 text-base sm:text-lg">
+            Choose from a wide variety of domains. We encourage applicants to select exactly 3 roles based on their interests and career plans.
           </p>
         </div>
 
@@ -84,20 +84,20 @@ export default function Roles() {
             return (
               <div
                 key={role.name}
-                className="glass-panel glass-panel-hover p-6 flex flex-col justify-between hover:border-ieee-accent/35"
+                className="glass-panel p-6 flex flex-col justify-between border-slate-200 bg-white/80 hover:border-[#FF6B00]/30 shadow-sm hover:shadow-md transition-all duration-300"
                 data-aos="fade-up"
                 data-aos-delay={idx * 50}
               >
                 <div>
                   {/* Icon Badge */}
-                  <div className="p-3 w-fit rounded-xl bg-ieee-blue/15 text-ieee-accent border border-ieee-blue/20 mb-5 shadow-[0_0_15px_rgba(0,180,255,0.05)]">
+                  <div className="p-3 w-fit rounded-xl bg-[#FF6B00]/10 text-[#FF6B00] border border-[#FF6B00]/20 mb-5 shadow-[0_0_15px_rgba(255,107,0,0.05)]">
                     <Icon size={22} />
                   </div>
                   
-                  <h4 className="text-white font-extrabold text-base tracking-wide mb-3">
+                  <h4 className="text-slate-800 font-extrabold text-base tracking-wide mb-3">
                     {role.name}
                   </h4>
-                  <p className="text-slate-400 text-xs leading-relaxed">
+                  <p className="text-slate-500 text-xs leading-relaxed">
                     {role.desc}
                   </p>
                 </div>

@@ -93,7 +93,7 @@ export default function ApplicationForm() {
   const handleWhatsappJoin = () => {
     localStorage.setItem("whatsappJoined", "true");
     setWhatsappJoined(true);
-    window.open("https://chat.whatsapp.com/LEVdBbZvnnEI3Flh1SKX6Y?s=cl&p=a&ilr=0", "_blank");
+    window.open("https://chat.whatsapp.com/JIHcHWvPznSECokEFz8aln?s=cl&p=a&ilr=1", "_blank");
     addToast("Official WhatsApp group link opened!", "info");
   };
 
@@ -155,126 +155,126 @@ export default function ApplicationForm() {
     }
   };
 
-  // React Select Custom Styling for Dark Theme
+  // React Select Custom Styling for Light Theme
   const customSelectStyles = {
     control: (base, state) => ({
       ...base,
-      background: "rgba(255, 255, 255, 0.03)",
-      borderColor: state.isFocused ? "#00B4FF" : "rgba(255, 255, 255, 0.08)",
-      boxShadow: state.isFocused ? "0 0 10px rgba(0, 180, 255, 0.15)" : "none",
+      background: "rgba(255, 255, 255, 0.8)",
+      borderColor: state.isFocused ? "#800000" : "rgba(0, 0, 0, 0.08)",
+      boxShadow: state.isFocused ? "0 0 10px rgba(128, 0, 0, 0.15)" : "none",
       borderRadius: "0.75rem",
       padding: "0.15rem",
-      color: "white",
+      color: "#1E293B",
       "&:hover": {
-        borderColor: "rgba(0, 180, 255, 0.3)"
+        borderColor: "rgba(128, 0, 0, 0.3)"
       }
     }),
     menu: (base) => ({
       ...base,
-      background: "#0A192F",
-      border: "1px solid rgba(255, 255, 255, 0.08)",
+      background: "#ffffff",
+      border: "1px solid rgba(0, 0, 0, 0.08)",
       borderRadius: "0.75rem",
       zIndex: 50
     }),
     option: (base, state) => ({
       ...base,
       background: state.isSelected 
-        ? "#00629B" 
+        ? "#800000" 
         : state.isFocused 
-          ? "rgba(0, 180, 255, 0.1)" 
+          ? "rgba(128, 0, 0, 0.05)" 
           : "transparent",
-      color: "white",
+      color: state.isSelected ? "white" : "#1E293B",
       cursor: "pointer",
       "&:active": {
-        background: "#00B4FF"
+        background: "#A0002A"
       }
     }),
     singleValue: (base) => ({
       ...base,
-      color: "white"
+      color: "#1E293B"
     }),
     placeholder: (base) => ({
       ...base,
-      color: "rgba(255, 255, 255, 0.3)",
+      color: "rgba(0, 0, 0, 0.4)",
       fontSize: "0.875rem"
     }),
     multiValue: (base) => ({
       ...base,
-      background: "rgba(0, 180, 255, 0.12)",
-      border: "1px solid rgba(0, 180, 255, 0.25)",
+      background: "rgba(255, 107, 0, 0.1)",
+      border: "1px solid rgba(255, 107, 0, 0.25)",
       borderRadius: "0.5rem",
     }),
     multiValueLabel: (base) => ({
       ...base,
-      color: "#00B4FF",
+      color: "#FF6B00",
       fontWeight: "600",
     }),
     multiValueRemove: (base) => ({
       ...base,
-      color: "#00B4FF",
+      color: "#FF6B00",
       cursor: "pointer",
       "&:hover": {
-        background: "rgba(0, 180, 255, 0.25)",
-        color: "white",
+        background: "rgba(255, 107, 0, 0.2)",
+        color: "#FF6B00",
       }
     })
   };
 
   if (isSuccess) {
     return (
-      <section id="apply" className="py-24 relative overflow-hidden bg-[#020c1b]">
+      <section id="apply" className="py-24 relative overflow-hidden bg-transparent">
         
         {/* Glow effects */}
         <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[30vw] h-[30vw] rounded-full bg-emerald-500/5 blur-[120px] pointer-events-none" />
-        <div className="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 w-[30vw] h-[30vw] rounded-full bg-ieee-blue/5 blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 w-[30vw] h-[30vw] rounded-full bg-[#800000]/5 blur-[120px] pointer-events-none" />
 
         <div className="max-w-3xl mx-auto px-4 relative z-30 text-center">
-          <div className="glass-panel p-8 sm:p-12 border-emerald-500/20 bg-emerald-950/5 shadow-[0_0_50px_rgba(16,185,129,0.15)] rounded-2xl relative overflow-hidden">
+          <div className="glass-panel p-8 sm:p-12 border-emerald-500/20 bg-white/70 shadow-[0_0_50px_rgba(16,185,129,0.1)] rounded-2xl relative overflow-hidden">
             
             {/* Glowing check circle indicator */}
-            <div className="w-24 h-24 bg-gradient-to-tr from-emerald-500/20 to-teal-500/10 text-emerald-400 rounded-3xl flex items-center justify-center mx-auto mb-8 border border-emerald-500/25 shadow-[0_0_35px_rgba(16,185,129,0.25)] animate-pulse">
+            <div className="w-24 h-24 bg-gradient-to-tr from-emerald-500/20 to-teal-500/10 text-emerald-600 rounded-3xl flex items-center justify-center mx-auto mb-8 border border-emerald-500/25 shadow-[0_0_35px_rgba(16,185,129,0.15)] animate-pulse">
               <FaCheckCircle size={44} />
             </div>
 
-            <h3 className="text-3xl sm:text-4xl font-extrabold text-white mb-2 tracking-wide leading-tight">
+            <h3 className="text-3xl sm:text-4xl font-extrabold text-slate-800 mb-2 tracking-wide leading-tight">
               Application Reached Us! 🎉
             </h3>
-            <p className="text-slate-300 text-sm leading-relaxed max-w-md mx-auto mb-8">
-              Your application has been successfully saved in our database. We are excited to review your candidacy for the <strong>KARE IEEE Education Society</strong>!
+            <p className="text-slate-600 text-sm leading-relaxed max-w-md mx-auto mb-8">
+              Your application has been successfully saved in our database. We are excited to review your candidacy for the <strong>CSI KARE STUDENT CHAPTER</strong>!
             </p>
 
             {/* Candidate Details Card */}
-            <div className="bg-[#0A192F]/60 border border-white/5 rounded-2xl p-6 mb-8 text-left max-w-md mx-auto space-y-3.5">
-              <div className="text-slate-400 text-[10px] font-bold uppercase tracking-widest border-b border-white/5 pb-2 mb-1 flex items-center justify-between">
+            <div className="bg-white/80 border border-slate-200/60 rounded-2xl p-6 mb-8 text-left max-w-md mx-auto space-y-3.5 shadow-sm">
+              <div className="text-slate-500 text-[10px] font-bold uppercase tracking-widest border-b border-slate-100 pb-2 mb-1 flex items-center justify-between">
                 <span>Registration Summary</span>
-                <span className="text-emerald-400 animate-pulse font-extrabold">• Live Status</span>
+                <span className="text-emerald-600 animate-pulse font-extrabold">• Live Status</span>
               </div>
               <div className="flex justify-between items-center text-xs">
-                <span className="text-slate-400">Full Name</span>
-                <strong className="text-white font-bold">{appliedName || "Candidate"}</strong>
+                <span className="text-slate-500">Full Name</span>
+                <strong className="text-slate-800 font-bold">{appliedName || "Candidate"}</strong>
               </div>
               <div className="flex justify-between items-center text-xs">
-                <span className="text-slate-400">Registration Number</span>
-                <strong className="text-ieee-accent font-mono tracking-wider text-sm">{appliedRegNo}</strong>
+                <span className="text-slate-500">Registration Number</span>
+                <strong className="text-[#FF6B00] font-mono tracking-wider text-sm">{appliedRegNo}</strong>
               </div>
               <div className="flex justify-between items-center text-xs">
-                <span className="text-slate-400">Submission Status</span>
-                <span className="px-2.5 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 shadow-[0_0_10px_rgba(16,185,129,0.1)]">
+                <span className="text-slate-500">Submission Status</span>
+                <span className="px-2.5 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shadow-[0_0_10px_rgba(16,185,129,0.05)]">
                   Received
                 </span>
               </div>
             </div>
 
             {/* Urgent Warning Note */}
-            <div className="bg-amber-500/5 border border-amber-500/15 rounded-2xl p-6 text-left max-w-lg mx-auto mb-8 space-y-2.5">
-              <h4 className="text-amber-300 font-extrabold text-sm flex items-center space-x-2">
-                <FaExclamationTriangle className="shrink-0 animate-bounce" size={16} />
+            <div className="bg-amber-50 border border-amber-200/60 rounded-2xl p-6 text-left max-w-lg mx-auto mb-8 space-y-2.5 shadow-sm">
+              <h4 className="text-amber-800 font-extrabold text-sm flex items-center space-x-2">
+                <FaExclamationTriangle className="shrink-0 animate-bounce text-amber-600" size={16} />
                 <span>Important: Wait for Updates in WhatsApp Group</span>
               </h4>
-              <p className="text-slate-300 text-xs leading-relaxed">
+              <p className="text-slate-600 text-xs leading-relaxed">
                 All subsequent recruitment updates, interview slot selections, technical test links, and schedules will be announced **exclusively** inside our official WhatsApp community.
               </p>
-              <p className="text-amber-300/80 text-[10px] font-bold leading-normal">
+              <p className="text-amber-700/90 text-[10px] font-bold leading-normal">
                 * Please do not leave or exit the group to ensure you do not miss your scheduled interview slot!
               </p>
             </div>
@@ -283,7 +283,7 @@ export default function ApplicationForm() {
               <button
                 type="button"
                 onClick={handleWhatsappJoin}
-                className="w-full sm:w-auto px-8 py-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs uppercase tracking-widest flex items-center justify-center space-x-2 transition-all duration-300 hover:shadow-[0_0_20px_rgba(16,185,129,0.4)] hover:-translate-y-0.5 border border-emerald-500/25 cursor-pointer"
+                className="w-full sm:w-auto px-8 py-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs uppercase tracking-widest flex items-center justify-center space-x-2 transition-all duration-300 hover:shadow-[0_0_20px_rgba(16,185,129,0.3)] hover:-translate-y-0.5 border border-emerald-500/25 cursor-pointer"
               >
                 <FaWhatsapp size={16} />
                 <span>Open WhatsApp Group</span>
@@ -297,29 +297,29 @@ export default function ApplicationForm() {
   }
 
   return (
-    <section id="apply" className="py-24 relative overflow-hidden bg-ieee-deep">
+    <section id="apply" className="py-24 relative overflow-hidden bg-transparent">
       
       {/* Glow effects */}
-      <div className="absolute top-1/4 right-[10%] w-[30vw] h-[30vw] rounded-full bg-ieee-blue/5 blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-1/4 left-[10%] w-[30vw] h-[30vw] rounded-full bg-ieee-accent/5 blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/4 right-[10%] w-[30vw] h-[30vw] rounded-full bg-[#800000]/5 blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-1/4 left-[10%] w-[30vw] h-[30vw] rounded-full bg-[#FF6B00]/5 blur-[120px] pointer-events-none" />
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-30">
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16" data-aos="fade-up">
-          <h2 className="text-xs font-bold tracking-widest text-ieee-accent uppercase mb-2">
+          <h2 className="text-xs font-bold tracking-widest text-[#FF6B00] uppercase mb-2">
             Join Our Community
           </h2>
-          <h3 className="text-3xl sm:text-5xl font-extrabold text-white mb-6">
+          <h3 className="text-3xl sm:text-5xl font-extrabold text-slate-800 mb-6">
             Application Form
           </h3>
-          <p className="text-slate-300 text-base sm:text-lg">
-            Please fill out all the fields below carefully. Choose your desired teams and rank them in order of your preference.
+          <p className="text-slate-600 text-base sm:text-lg">
+            Please fill out all the fields below carefully. Select your preferred teams and arrange them in order.
           </p>
         </div>
 
         {/* Application Form Box */}
-        <div className="glass-panel p-8 sm:p-10 hover:border-ieee-blue/20" data-aos="fade-up" data-aos-delay="100">
+        <div className="glass-panel p-8 sm:p-10 hover:border-[#800000]/20" data-aos="fade-up" data-aos-delay="100">
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             
             {/* Fields Grid */}
@@ -327,39 +327,39 @@ export default function ApplicationForm() {
               
               {/* Full Name */}
               <div className="flex flex-col">
-                <label className="text-slate-300 font-semibold text-xs tracking-wider uppercase mb-2">
+                <label className="text-slate-700 font-semibold text-xs tracking-wider uppercase mb-2">
                   Full Name <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
                   placeholder="Enter your full name"
-                  className={`bg-white/3 border px-4 py-3 rounded-xl text-white placeholder-white/20 text-sm focus:outline-none focus:border-ieee-accent focus:ring-2 focus:ring-ieee-accent/20 transition-all ${
-                    errors.name ? "border-rose-500/50" : "border-white/8"
+                  className={`bg-white border px-4 py-3 rounded-xl text-slate-800 placeholder-slate-400 text-sm focus:outline-none focus:border-[#FF6B00] focus:ring-2 focus:ring-[#FF6B00]/20 transition-all ${
+                    errors.name ? "border-rose-500/50" : "border-slate-200"
                   }`}
                   {...register("name", { required: "Name is required" })}
                 />
-                {errors.name && <span className="text-rose-400 text-xs mt-1.5 font-semibold">{errors.name.message}</span>}
+                {errors.name && <span className="text-rose-600 text-xs mt-1.5 font-semibold">{errors.name.message}</span>}
               </div>
 
               {/* Registration Number */}
               <div className="flex flex-col">
-                <label className="text-slate-300 font-semibold text-xs tracking-wider uppercase mb-2">
+                <label className="text-slate-700 font-semibold text-xs tracking-wider uppercase mb-2">
                   Registration Number <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
                   placeholder="e.g. 9919004001"
-                  className={`bg-white/3 border px-4 py-3 rounded-xl text-white placeholder-white/20 text-sm focus:outline-none focus:border-ieee-accent focus:ring-2 focus:ring-ieee-accent/20 transition-all ${
-                    errors.registrationNumber ? "border-rose-500/50" : "border-white/8"
+                  className={`bg-white border px-4 py-3 rounded-xl text-slate-800 placeholder-slate-400 text-sm focus:outline-none focus:border-[#FF6B00] focus:ring-2 focus:ring-[#FF6B00]/20 transition-all ${
+                    errors.registrationNumber ? "border-rose-500/50" : "border-slate-200"
                   }`}
                   {...register("registrationNumber", { required: "Registration Number is required" })}
                 />
-                {errors.registrationNumber && <span className="text-rose-400 text-xs mt-1.5 font-semibold">{errors.registrationNumber.message}</span>}
+                {errors.registrationNumber && <span className="text-rose-600 text-xs mt-1.5 font-semibold">{errors.registrationNumber.message}</span>}
               </div>
 
               {/* Year */}
               <div className="flex flex-col">
-                <label className="text-slate-300 font-semibold text-xs tracking-wider uppercase mb-2">
+                <label className="text-slate-700 font-semibold text-xs tracking-wider uppercase mb-2">
                   Year <span className="text-red-500">*</span>
                 </label>
                 <Controller
@@ -377,16 +377,16 @@ export default function ApplicationForm() {
                         isSearchable={false}
                       />
                     ) : (
-                      <div className="w-full h-[42px] bg-white/3 border border-white/8 rounded-xl animate-pulse" />
+                      <div className="w-full h-[42px] bg-white border border-slate-200 rounded-xl animate-pulse" />
                     )
                   )}
                 />
-                {errors.year && <span className="text-rose-400 text-xs mt-1.5 font-semibold">{errors.year.message}</span>}
+                {errors.year && <span className="text-rose-600 text-xs mt-1.5 font-semibold">{errors.year.message}</span>}
               </div>
 
               {/* Department */}
               <div className="flex flex-col">
-                <label className="text-slate-300 font-semibold text-xs tracking-wider uppercase mb-2">
+                <label className="text-slate-700 font-semibold text-xs tracking-wider uppercase mb-2">
                   Department <span className="text-red-500">*</span>
                 </label>
                 <Controller
@@ -404,39 +404,39 @@ export default function ApplicationForm() {
                         isSearchable={false}
                       />
                     ) : (
-                      <div className="w-full h-[42px] bg-white/3 border border-white/8 rounded-xl animate-pulse" />
+                      <div className="w-full h-[42px] bg-white border border-slate-200 rounded-xl animate-pulse" />
                     )
                   )}
                 />
-                {errors.department && <span className="text-rose-400 text-xs mt-1.5 font-semibold">{errors.department.message}</span>}
+                {errors.department && <span className="text-rose-600 text-xs mt-1.5 font-semibold">{errors.department.message}</span>}
               </div>
 
               {/* Section */}
               <div className="flex flex-col">
-                <label className="text-slate-300 font-semibold text-xs tracking-wider uppercase mb-2">
+                <label className="text-slate-700 font-semibold text-xs tracking-wider uppercase mb-2">
                   Section <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
                   placeholder="e.g. A or B"
-                  className={`bg-white/3 border px-4 py-3 rounded-xl text-white placeholder-white/20 text-sm focus:outline-none focus:border-ieee-accent focus:ring-2 focus:ring-ieee-accent/20 transition-all ${
-                    errors.section ? "border-rose-500/50" : "border-white/8"
+                  className={`bg-white border px-4 py-3 rounded-xl text-slate-800 placeholder-slate-400 text-sm focus:outline-none focus:border-[#FF6B00] focus:ring-2 focus:ring-[#FF6B00]/20 transition-all ${
+                    errors.section ? "border-rose-500/50" : "border-slate-200"
                   }`}
                   {...register("section", { required: "Section is required" })}
                 />
-                {errors.section && <span className="text-rose-400 text-xs mt-1.5 font-semibold">{errors.section.message}</span>}
+                {errors.section && <span className="text-rose-600 text-xs mt-1.5 font-semibold">{errors.section.message}</span>}
               </div>
 
               {/* Email */}
               <div className="flex flex-col">
-                <label className="text-slate-300 font-semibold text-xs tracking-wider uppercase mb-2">
+                <label className="text-slate-700 font-semibold text-xs tracking-wider uppercase mb-2">
                   Email ID <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="email"
                   placeholder="yourname@gmail.com"
-                  className={`bg-white/3 border px-4 py-3 rounded-xl text-white placeholder-white/20 text-sm focus:outline-none focus:border-ieee-accent focus:ring-2 focus:ring-ieee-accent/20 transition-all ${
-                    errors.email ? "border-rose-500/50" : "border-white/8"
+                  className={`bg-white border px-4 py-3 rounded-xl text-slate-800 placeholder-slate-400 text-sm focus:outline-none focus:border-[#FF6B00] focus:ring-2 focus:ring-[#FF6B00]/20 transition-all ${
+                    errors.email ? "border-rose-500/50" : "border-slate-200"
                   }`}
                   {...register("email", {
                     required: "Email is required",
@@ -446,19 +446,19 @@ export default function ApplicationForm() {
                     }
                   })}
                 />
-                {errors.email && <span className="text-rose-400 text-xs mt-1.5 font-semibold">{errors.email.message}</span>}
+                {errors.email && <span className="text-rose-600 text-xs mt-1.5 font-semibold">{errors.email.message}</span>}
               </div>
 
               {/* WhatsApp Phone Number */}
               <div className="flex flex-col md:col-span-2">
-                <label className="text-slate-300 font-semibold text-xs tracking-wider uppercase mb-2">
+                <label className="text-slate-700 font-semibold text-xs tracking-wider uppercase mb-2">
                   WhatsApp Phone Number <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="tel"
                   placeholder="10-digit WhatsApp number"
-                  className={`bg-white/3 border px-4 py-3 rounded-xl text-white placeholder-white/20 text-sm focus:outline-none focus:border-ieee-accent focus:ring-2 focus:ring-ieee-accent/20 transition-all ${
-                    errors.phone ? "border-rose-500/50" : "border-white/8"
+                  className={`bg-white border px-4 py-3 rounded-xl text-slate-800 placeholder-slate-400 text-sm focus:outline-none focus:border-[#FF6B00] focus:ring-2 focus:ring-[#FF6B00]/20 transition-all ${
+                    errors.phone ? "border-rose-500/50" : "border-slate-200"
                   }`}
                   {...register("phone", {
                     required: "Phone number is required",
@@ -468,18 +468,18 @@ export default function ApplicationForm() {
                     }
                   })}
                 />
-                {errors.phone && <span className="text-rose-400 text-xs mt-1.5 font-semibold">{errors.phone.message}</span>}
+                {errors.phone && <span className="text-rose-600 text-xs mt-1.5 font-semibold">{errors.phone.message}</span>}
               </div>
 
             </div>
 
             {/* Role Preference Selector */}
-            <div className="flex flex-col border-t border-white/5 pt-6">
-              <label className="text-slate-300 font-semibold text-xs tracking-wider uppercase mb-1">
-                Role Preferences (Select up to 3) <span className="text-red-500">*</span>
+            <div className="flex flex-col border-t border-slate-200 pt-6">
+              <label className="text-slate-700 font-semibold text-xs tracking-wider uppercase mb-1">
+                Role Preferences (Select exactly 3) <span className="text-red-500">*</span>
               </label>
-              <p className="text-slate-400 text-xs mb-3">
-                Select your preferred teams. You can choose a maximum of three domains.
+              <p className="text-slate-500 text-xs mb-3">
+                Select your preferred teams. You must select exactly three domains to submit.
               </p>
               {isMounted ? (
                 <Select
@@ -499,7 +499,7 @@ export default function ApplicationForm() {
                   closeMenuOnSelect={false}
                 />
               ) : (
-                <div className="w-full h-[42px] bg-white/3 border border-white/8 rounded-xl animate-pulse" />
+                <div className="w-full h-[42px] bg-white border border-slate-200 rounded-xl animate-pulse" />
               )}
             </div>
 
@@ -508,13 +508,13 @@ export default function ApplicationForm() {
               <motion.div 
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="flex flex-col border border-white/5 rounded-2xl p-6 bg-white/2"
+                className="flex flex-col border border-slate-200 rounded-2xl p-6 bg-white/80"
               >
-                <label className="text-slate-300 font-semibold text-xs tracking-wider uppercase mb-1 flex items-center space-x-2">
-                  <FaListOl className="text-ieee-accent" />
+                <label className="text-slate-700 font-semibold text-xs tracking-wider uppercase mb-1 flex items-center space-x-2">
+                  <FaListOl className="text-[#FF6B00]" />
                   <span>Prioritize Selected Roles (Drag to Reorder)</span>
                 </label>
-                <p className="text-slate-400 text-xs mb-4">
+                <p className="text-slate-500 text-xs mb-4">
                   Drag the cards up or down to set your priority order. Top card represents your highest priority choice.
                 </p>
                 
@@ -529,17 +529,17 @@ export default function ApplicationForm() {
                     <Reorder.Item
                       key={role}
                       value={role}
-                      className="glass-panel p-4 flex items-center justify-between border-white/8 hover:border-ieee-accent/30 bg-[#0A192F]/60 select-none active:cursor-grabbing"
+                      className="glass-panel p-4 flex items-center justify-between border-slate-200 hover:border-[#FF6B00]/30 bg-white select-none active:cursor-grabbing shadow-sm"
                     >
                       <div className="flex items-center space-x-3">
-                        <span className="w-6 h-6 rounded-full bg-ieee-blue/20 text-ieee-accent font-bold text-xs flex items-center justify-center border border-ieee-blue/30">
-                          {idx + 1}
+                        <span className="w-8 h-8 rounded-full bg-slate-100 text-slate-700 font-bold text-base flex items-center justify-center border border-slate-200 select-none">
+                          {idx === 0 ? "🥇" : idx === 1 ? "🥈" : "🥉"}
                         </span>
-                        <span className="text-white text-sm font-semibold tracking-wide">
+                        <span className="text-slate-800 text-sm font-semibold tracking-wide">
                           {role}
                         </span>
                       </div>
-                      <div className="text-slate-500 text-xs">
+                      <div className="text-slate-500 text-xs font-semibold">
                         Priority {idx + 1}
                       </div>
                     </Reorder.Item>
@@ -549,62 +549,69 @@ export default function ApplicationForm() {
             )}
 
             {/* WhatsApp Verification Gate */}
-            <div className="border-t border-white/5 pt-6 space-y-4">
-              <div className="flex items-start space-x-3 p-4 rounded-xl border border-amber-500/20 bg-amber-500/5">
-                <FaExclamationTriangle className="text-amber-500 shrink-0 mt-0.5" size={18} />
+            <div className="border-t border-slate-200 pt-6 space-y-4">
+              <div className="flex items-start space-x-3 p-4 rounded-xl border border-amber-200 bg-amber-50">
+                <FaExclamationTriangle className="text-amber-600 shrink-0 mt-0.5" size={18} />
                 <div className="text-sm">
-                  <h5 className="font-bold text-amber-300 leading-tight mb-1">
+                  <h5 className="font-bold text-amber-800 leading-tight mb-1">
                     WhatsApp Group Joining is Mandatory
                   </h5>
-                  <p className="text-slate-300 text-xs leading-relaxed">
+                  <p className="text-slate-600 text-xs leading-relaxed">
                     You must join our official WhatsApp Group before submitting your application. This is where all recruitment updates and schedules will be announced.
                   </p>
                 </div>
               </div>
 
-              <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-white/2 border border-white/5 p-4 rounded-xl">
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-white border border-slate-200 p-4 rounded-xl shadow-sm">
                 <button
                   type="button"
                   onClick={handleWhatsappJoin}
-                  className="w-full sm:w-auto py-3 px-6 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm flex items-center justify-center space-x-2 transition-all duration-300 hover:shadow-[0_0_15px_rgba(16,185,129,0.3)] hover:-translate-y-0.5"
+                  className="w-full sm:w-auto py-3 px-6 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm flex items-center justify-center space-x-2 transition-all duration-300 hover:shadow-[0_0_15px_rgba(16,185,129,0.3)] hover:-translate-y-0.5 cursor-pointer"
                 >
                   <FaWhatsapp size={20} />
                   <span>Join Official WhatsApp Group</span>
                 </button>
 
                 {whatsappJoined ? (
-                  <div className="flex items-center space-x-2 text-emerald-400 text-xs font-bold bg-emerald-950/20 border border-emerald-500/20 px-4 py-2.5 rounded-lg w-full sm:w-auto justify-center">
+                  <div className="flex items-center space-x-2 text-emerald-600 text-xs font-bold bg-emerald-50 border border-emerald-200 px-4 py-2.5 rounded-lg w-full sm:w-auto justify-center">
                     <FaCheckCircle size={16} />
                     <span>WhatsApp Group Verified</span>
                   </div>
                 ) : (
-                  <span className="text-amber-400 text-xs font-semibold">
+                  <span className="text-amber-600 text-xs font-semibold">
                     Verification Pending
                   </span>
                 )}
               </div>
             </div>
 
+            {/* Validation Message */}
+            {priorities.length !== 3 && (
+              <div className="text-amber-700 bg-amber-50 border border-amber-200/60 p-3.5 rounded-xl font-medium text-xs text-center leading-relaxed">
+                Please select exactly three roles and arrange them in your preferred priority order before submitting.
+              </div>
+            )}
+
             {/* Submit Button */}
-            <div className="pt-4">
+            <div className="pt-2">
               <button
                 type="submit"
-                disabled={submitting || !whatsappJoined || priorities.length === 0}
+                disabled={submitting || !whatsappJoined || priorities.length !== 3}
                 className={`w-full py-4 rounded-xl text-white font-extrabold text-base tracking-wider uppercase transition-all duration-300 ${
-                  whatsappJoined && priorities.length > 0 && !submitting
-                    ? "bg-ieee-blue hover:bg-ieee-light hover:shadow-[0_0_20px_rgba(0,180,255,0.4)] hover:-translate-y-0.5 border border-ieee-accent/25 cursor-pointer"
-                    : "bg-slate-800 text-slate-500 border border-slate-700/50 cursor-not-allowed"
+                  whatsappJoined && priorities.length === 3 && !submitting
+                    ? "bg-gradient-to-r from-[#FF6B00] to-[#FF8A33] hover:shadow-[0_0_20px_rgba(255,107,0,0.4)] hover:-translate-y-0.5 border border-[#FF6B00]/25 cursor-pointer"
+                    : "bg-slate-200 text-slate-400 border border-slate-300/40 cursor-not-allowed"
                 }`}
               >
                 {submitting ? (
                   <span className="flex items-center justify-center space-x-2">
-                    <FaSpinner className="animate-spin" size={18} />
+                    <FaSpinner className="animate-spin text-slate-400" size={18} />
                     <span>Submitting Application...</span>
                   </span>
                 ) : !whatsappJoined ? (
                   "You must join the WhatsApp Group before submitting"
-                ) : priorities.length === 0 ? (
-                  "Please select your preferred roles"
+                ) : priorities.length !== 3 ? (
+                  "Please select exactly three roles"
                 ) : (
                   "Submit Application"
                 )}

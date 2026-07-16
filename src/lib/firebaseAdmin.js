@@ -25,7 +25,7 @@ if (!admin.apps.length) {
       console.log("Firebase Admin SDK credentials loaded from JSON file path.");
     } else {
       // Fallback: Check the root workspace directory for the service account file
-      const defaultRelativePath = path.join(process.cwd(), "ieee-recruitment-c1870-firebase-adminsdk-fbsvc-b800d1a4ef.json");
+      const defaultRelativePath = path.join(process.cwd(), "csi-recruitment-36336-firebase-adminsdk-fbsvc-735777ce1f.json");
       if (fs.existsSync(defaultRelativePath)) {
         const fileContent = fs.readFileSync(defaultRelativePath, "utf8");
         serviceAccount = JSON.parse(fileContent);

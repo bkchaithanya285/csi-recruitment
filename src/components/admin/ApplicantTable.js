@@ -62,7 +62,7 @@ export default function ApplicantTable({ applicants, onFilteredChange, refreshDa
   // Approval flow states
   const [approvalModalData, setApprovalModalData] = useState(null);
   const [approvedRole, setApprovedRole] = useState("");
-  const [previewTab, setPreviewTab] = useState("email"); // 'email' or 'whatsapp'
+  const [previewTab, setPreviewTab] = useState("whatsapp"); // Default to WhatsApp
 
   // Apply filters, searches, and sorts
   const processedApplicants = useMemo(() => {
@@ -130,6 +130,7 @@ export default function ApplicantTable({ applicants, onFilteredChange, refreshDa
           name: app.name,
           email: app.email,
           phone: app.phone,
+          registrationNumber: app.registrationNumber,
           priority1: app.priority1 || ROLE_OPTIONS[0],
           priority2: app.priority2,
           priority3: app.priority3
@@ -181,11 +182,48 @@ export default function ApplicantTable({ applicants, onFilteredChange, refreshDa
       }
 
       if (sendWhatsapp) {
-        const rawMessage = `Hello ${approvalModalData.name} 👋,
+        const appYear = approvalModalData.timestamp && approvalModalData.timestamp.toDate 
+          ? approvalModalData.timestamp.toDate().getFullYear() 
+          : new Date().getFullYear();
+        const regNoStr = approvalModalData.registrationNumber || "";
+        const refNumber = `CSI-KARE-SC-${appYear}-${regNoStr.substring(Math.max(0, regNoStr.length - 4))}`;
+        const currentDate = new Date().toLocaleDateString("en-IN", {
+          day: "2-digit",
+          month: "long",
+          year: "numeric"
+        });
 
-Congratulations! You have been selected for the role of *${approvedRole}* in the *KARE IEEE Education Society*.
+        const rawMessage = `*CSI KARE STUDENT CHAPTER*
+Kalasalingam Academy of Research and Education
 
-We look forward to working with you!`;
+*OFFICIAL APPOINTMENT ORDER*
+--------------------------------------------------
+*REF NO:* ${refNumber}
+*DATE:* ${currentDate}
+--------------------------------------------------
+
+Dear ${approvalModalData.name},
+
+Based on your performance in the recruitment interviews and evaluations held by the Executive Board, we are pleased to inform you that you have been selected to join the core team of *CSI KARE STUDENT CHAPTER* for the academic year 2026-2027.
+
+You are hereby appointed to the following position with immediate effect:
+
+• *Appointee Name:* ${approvalModalData.name}
+• *Assigned Role/Domain:* *${approvedRole}*
+• *Organization:* CSI KARE STUDENT CHAPTER
+
+As a core committee member, you will be expected to work collaboratively with your team members, demonstrate leadership quality, and actively contribute to the workshops, technical events, and initiatives organized by the chapter.
+
+Please join our official WhatsApp group for recruitment updates, onboarding details, and task assignments:
+👉 https://chat.whatsapp.com/JIHcHWvPznSECokEFz8aln?s=cl&p=a&ilr=1
+
+*Dr. P. Pandiselvam*
+CSI KARE
+
+Congratulations once again! We look forward to an outstanding tenure working together to drive academic and technical excellence.
+
+Regards,
+*CSI KARE STUDENT CHAPTER*`;
         const encodedMessage = encodeURIComponent(rawMessage);
         const link = `https://wa.me/91${approvalModalData.phone}?text=${encodedMessage}`;
         window.open(link, "_blank");
@@ -227,17 +265,19 @@ We look forward to working with you!`;
   const handleSendWhatsApp = (app) => {
     const rawMessage = `Hello ${app.name} 👋
 
-Welcome to *KARE IEEE EDUCATION SOCIETY*.
+Welcome to *CSI KARE STUDENT CHAPTER*.
 
-Thank you for applying to join our community. 
+Thank you for registering to become a part of our technical community.
 
-We will verify your details, and updates regarding the interviews will be shared exclusively inside our official WhatsApp group. Please make sure you join the group using the link below:
+Please join our official WhatsApp group for recruitment updates, interviews, workshops, coding sessions, and future events.
 
 Official WhatsApp Group:
-https://chat.whatsapp.com/LEVdBbZvnnEI3Flh1SKX6Y?s=cl&p=a&ilr=0
+https://chat.whatsapp.com/JIHcHWvPznSECokEFz8aln?s=cl&p=a&ilr=1
+
+We are excited to have you with us.
 
 Regards,
-KARE IEEE EDUCATION SOCIETY`;
+CSI KARE STUDENT CHAPTER`;
 
     const encodedMessage = encodeURIComponent(rawMessage);
     const link = `https://wa.me/91${app.phone}?text=${encodedMessage}`;
@@ -258,17 +298,17 @@ KARE IEEE EDUCATION SOCIETY`;
       const pageWidth = doc.internal.pageSize.width;
       const pageHeight = doc.internal.pageSize.height;
 
-      // Draw a gold/blue double border frame
-      doc.setDrawColor(0, 98, 155); // IEEE Blue
+      // Draw a gold/maroon double border frame
+      doc.setDrawColor(128, 0, 0); // CSI Maroon
       doc.setLineWidth(1);
       doc.rect(8, 8, pageWidth - 16, pageHeight - 16);
-      doc.setDrawColor(231, 119, 36); // IEEE Orange
+      doc.setDrawColor(255, 107, 0); // CSI Orange
       doc.setLineWidth(0.5);
       doc.rect(9.5, 9.5, pageWidth - 19, pageHeight - 19);
 
       // Add Header Logo
       try {
-        const logoUrl = "/logo.jpg";
+        const logoUrl = "/csi-logo.jpg";
         const logoBase64 = await new Promise((resolve, reject) => {
           const img = new Image();
           img.crossOrigin = "anonymous";
@@ -292,7 +332,7 @@ KARE IEEE EDUCATION SOCIETY`;
       doc.setTextColor(15, 23, 42);
       doc.setFont("times", "bold");
       doc.setFontSize(16);
-      doc.text("KARE IEEE EDUCATION SOCIETY", pageWidth / 2, 48, { align: "center" });
+      doc.text("CSI KARE STUDENT CHAPTER", pageWidth / 2, 48, { align: "center" });
 
       doc.setFont("times", "italic");
       doc.setFontSize(9.5);
@@ -311,7 +351,7 @@ KARE IEEE EDUCATION SOCIETY`;
       const appYear = app.timestamp && app.timestamp.toDate 
         ? app.timestamp.toDate().getFullYear() 
         : new Date().getFullYear();
-      const refNumber = `REF: KARE-IEEE-EDS-${appYear}-${app.registrationNumber.substring(app.registrationNumber.length - 4)}`;
+      const refNumber = `REF: CSI-KARE-SC-${appYear}-${app.registrationNumber.substring(app.registrationNumber.length - 4)}`;
       const currentDate = new Date().toLocaleDateString("en-IN", {
         day: "2-digit",
         month: "long",
@@ -324,7 +364,7 @@ KARE IEEE EDUCATION SOCIETY`;
       doc.line(15, 70, pageWidth - 15, 70);
 
       // Document Title
-      doc.setTextColor(0, 98, 155);
+      doc.setTextColor(128, 0, 0);
       doc.setFont("times", "bold");
       doc.setFontSize(17);
       doc.text("OFFICIAL APPOINTMENT ORDER", pageWidth / 2, 82, { align: "center" });
@@ -339,7 +379,7 @@ KARE IEEE EDUCATION SOCIETY`;
       doc.setFont("times", "normal");
       doc.setFontSize(11);
       doc.setTextColor(51, 65, 85);
-      const body1 = "Based on your performance in the recruitment interviews and evaluations held by the Executive Board, we are pleased to inform you that you have been selected to join the core team of KARE IEEE Education Society for the academic year 2026-2027.";
+      const body1 = "Based on your performance in the recruitment interviews and evaluations held by the Executive Board, we are pleased to inform you that you have been selected to join the core team of CSI KARE Student Chapter for the academic year 2026-2027.";
       const body2 = "You are hereby appointed to the following position with immediate effect:";
 
       let currentY = 101;
@@ -367,10 +407,10 @@ KARE IEEE EDUCATION SOCIETY`;
 
       doc.setTextColor(15, 23, 42);
       doc.text(app.name, pageWidth - 20, boxStartY + 9, { align: "right" });
-      doc.setTextColor(0, 98, 155);
+      doc.setTextColor(128, 0, 0);
       doc.text(app.approvedRole || app.priority1 || "Core Member", pageWidth - 20, boxStartY + 17, { align: "right" });
       doc.setTextColor(15, 23, 42);
-      doc.text("KARE IEEE Education Society", pageWidth - 20, boxStartY + 25, { align: "right" });
+      doc.text("CSI KARE STUDENT CHAPTER", pageWidth - 20, boxStartY + 25, { align: "right" });
 
       currentY = boxStartY + 33 + 8;
 
@@ -395,46 +435,23 @@ KARE IEEE EDUCATION SOCIETY`;
       doc.setFont("times", "bold");
       doc.setTextColor(15, 23, 42);
       doc.text("Regards,", 15, currentY);
-      doc.setTextColor(0, 98, 155);
-      doc.text("KARE IEEE Education Society", 15, currentY + 5);
+      doc.setTextColor(128, 0, 0);
+      doc.text("CSI KARE STUDENT CHAPTER", 15, currentY + 5);
 
-      // Signature line & image
-      try {
-        const sigUrl = "/signature.jpg";
-        const sigBase64 = await new Promise((resolve, reject) => {
-          const img = new Image();
-          img.crossOrigin = "anonymous";
-          img.onload = () => {
-            const canvas = document.createElement("canvas");
-            canvas.width = img.width;
-            canvas.height = img.height;
-            const ctx = canvas.getContext("2d");
-            ctx.drawImage(img, 0, 0);
-            resolve(canvas.toDataURL("image/jpeg"));
-          };
-          img.onerror = (e) => reject(e);
-          img.src = sigUrl;
-        });
-        doc.addImage(sigBase64, "JPEG", (pageWidth - 30) / 2, currentY + 12, 30, 15);
-      } catch (err) {
-        console.error("Failed to add signature to PDF:", err);
-      }
-
-      // Signature metadata
+      // Signature metadata line
       doc.setDrawColor(148, 163, 184);
       doc.setLineWidth(0.5);
-      doc.line((pageWidth - 60) / 2, currentY + 30, (pageWidth + 60) / 2, currentY + 30);
+      doc.line((pageWidth - 60) / 2, currentY + 22, (pageWidth + 60) / 2, currentY + 22);
 
       doc.setTextColor(15, 23, 42);
       doc.setFont("times", "bold");
       doc.setFontSize(9.5);
-      doc.text("Dr. P. Chinnasamy", pageWidth / 2, currentY + 34, { align: "center" });
+      doc.text("Dr. P. Pandiselvam", pageWidth / 2, currentY + 26, { align: "center" });
 
       doc.setTextColor(100, 116, 139);
       doc.setFont("times", "normal");
       doc.setFontSize(8.5);
-      doc.text("SBC COUNSELLOR", pageWidth / 2, currentY + 38, { align: "center" });
-      doc.text("KARE IEEE Education Society", pageWidth / 2, currentY + 42, { align: "center" });
+      doc.text("CSI KARE", pageWidth / 2, currentY + 30, { align: "center" });
 
       doc.save(`Appointment_Order_${app.name.replace(/\s+/g, "_")}.pdf`);
       addToast("Appointment Order downloaded successfully!", "success");
@@ -467,17 +484,17 @@ KARE IEEE EDUCATION SOCIETY`;
     <div className="space-y-6">
       
       {/* Search and Filters Bar */}
-      <div className="glass-panel p-5 space-y-4 border-white/5 bg-[#0A192F]/20">
+      <div className="glass-panel-dark p-5 space-y-4 border-white/10 bg-[#1E0000]/20 shadow-lg">
         
         {/* Search */}
         <div className="relative">
-          <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" size={14} />
+          <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={14} />
           <input
             type="text"
             placeholder="Search by Name, Registration Number, or Phone..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-11 pr-4 py-3 rounded-xl bg-white/3 border border-white/8 text-white placeholder-white/20 text-sm focus:outline-none focus:border-ieee-accent focus:ring-2 focus:ring-ieee-accent/20 transition-all"
+            className="w-full pl-11 pr-4 py-3 rounded-xl bg-[#0F0000] border border-white/10 text-white placeholder-slate-400 text-sm focus:outline-none focus:border-[#FF6B00] focus:ring-2 focus:ring-[#FF6B00]/20 transition-all"
           />
         </div>
 
@@ -492,7 +509,7 @@ KARE IEEE EDUCATION SOCIETY`;
             <select
               value={deptFilter}
               onChange={(e) => setDeptFilter(e.target.value)}
-              className="bg-[#020C1B] border border-white/8 rounded-xl px-3 py-2 text-xs font-semibold text-white focus:outline-none focus:border-ieee-accent transition-all cursor-pointer"
+              className="bg-[#0F0000] border border-white/10 rounded-xl px-3 py-2 text-xs font-semibold text-white focus:outline-none focus:border-[#FF6B00] transition-all cursor-pointer"
             >
               <option value="">All Departments</option>
               {DEPT_OPTIONS.map(d => <option key={d} value={d}>{d}</option>)}
@@ -507,7 +524,7 @@ KARE IEEE EDUCATION SOCIETY`;
             <select
               value={yearFilter}
               onChange={(e) => setYearFilter(e.target.value)}
-              className="bg-[#020C1B] border border-white/8 rounded-xl px-3 py-2 text-xs font-semibold text-white focus:outline-none focus:border-ieee-accent transition-all cursor-pointer"
+              className="bg-[#0F0000] border border-white/10 rounded-xl px-3 py-2 text-xs font-semibold text-white focus:outline-none focus:border-[#FF6B00] transition-all cursor-pointer"
             >
               <option value="">All Years</option>
               {YEAR_OPTIONS.map(y => <option key={y} value={y}>{y}</option>)}
@@ -522,7 +539,7 @@ KARE IEEE EDUCATION SOCIETY`;
             <select
               value={roleFilter}
               onChange={(e) => setRoleFilter(e.target.value)}
-              className="bg-[#020C1B] border border-white/8 rounded-xl px-3 py-2 text-xs font-semibold text-white focus:outline-none focus:border-ieee-accent transition-all cursor-pointer"
+              className="bg-[#0F0000] border border-white/10 rounded-xl px-3 py-2 text-xs font-semibold text-white focus:outline-none focus:border-[#FF6B00] transition-all cursor-pointer"
             >
               <option value="">All Roles</option>
               {ROLE_OPTIONS.map(r => <option key={r} value={r}>{r}</option>)}
@@ -537,7 +554,7 @@ KARE IEEE EDUCATION SOCIETY`;
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="bg-[#020C1B] border border-white/8 rounded-xl px-3 py-2 text-xs font-semibold text-white focus:outline-none focus:border-ieee-accent transition-all cursor-pointer"
+              className="bg-[#0F0000] border border-white/10 rounded-xl px-3 py-2 text-xs font-semibold text-white focus:outline-none focus:border-[#FF6B00] transition-all cursor-pointer"
             >
               <option value="">All Statuses</option>
               {STATUS_OPTIONS.map(s => <option key={s} value={s}>{s.toUpperCase()}</option>)}
@@ -549,11 +566,11 @@ KARE IEEE EDUCATION SOCIETY`;
       </div>
 
       {/* Table Box */}
-      <div className="glass-panel overflow-hidden border-white/5 bg-[#0A192F]/20">
+      <div className="glass-panel-dark overflow-hidden border-white/10 bg-[#1E0000]/10 shadow-lg">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="border-b border-white/5 text-slate-400 text-[10px] font-bold tracking-widest uppercase bg-white/2 select-none">
+              <tr className="border-b border-white/10 text-slate-300 text-[10px] font-bold tracking-widest uppercase bg-[#1E0000]/60 select-none">
                 <th className="py-4 px-6 cursor-pointer hover:text-white" onClick={() => toggleSort("name")}>
                   <div className="flex items-center gap-1.5">
                     <span>Name</span>
@@ -580,7 +597,7 @@ KARE IEEE EDUCATION SOCIETY`;
               </tr>
             </thead>
             
-            <tbody className="divide-y divide-white/5 text-slate-300 text-xs">
+            <tbody className="divide-y divide-white/10 text-slate-300 text-xs">
               {paginatedApplicants.map((app) => (
                 <tr key={app.id} className="hover:bg-white/1.5 transition-colors">
                   
@@ -739,12 +756,12 @@ KARE IEEE EDUCATION SOCIETY`;
       {/* Details View Modal */}
       {selectedApplicant && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-          <div className="glass-panel w-full max-w-2xl border-white/8 bg-[#0A192F] shadow-2xl p-6 sm:p-8 relative max-h-[90vh] overflow-y-auto">
+          <div className="glass-panel-dark w-full max-w-2xl border-white/10 bg-[#0F0000] shadow-2xl p-6 sm:p-8 relative max-h-[90vh] overflow-y-auto">
             
             {/* Header */}
-            <div className="flex items-center justify-between border-b border-white/5 pb-4 mb-6">
+            <div className="flex items-center justify-between border-b border-white/10 pb-4 mb-6">
               <div className="flex items-center space-x-3">
-                <div className="p-2.5 rounded-xl bg-ieee-blue/20 text-ieee-accent border border-ieee-blue/30">
+                <div className="p-2.5 rounded-xl bg-[#800000]/20 text-[#FF6B00] border border-[#800000]/30">
                   <FaUserCheck size={18} />
                 </div>
                 <div>
@@ -880,7 +897,7 @@ KARE IEEE EDUCATION SOCIETY`;
       {/* Delete Confirmation Alert Modal */}
       {deleteConfirmId && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4">
-          <div className="glass-panel w-full max-w-sm border-rose-500/30 bg-[#0A192F] shadow-2xl p-6 text-center">
+          <div className="glass-panel-dark w-full max-w-sm border-rose-500/30 bg-[#0F0000] shadow-2xl p-6 text-center">
             <h4 className="text-white font-extrabold text-lg tracking-wide mb-2">
               Confirm Deletion
             </h4>
@@ -890,7 +907,7 @@ KARE IEEE EDUCATION SOCIETY`;
             <div className="flex gap-4">
               <button
                 onClick={() => setDeleteConfirmId(null)}
-                className="flex-grow py-3 rounded-xl border border-white/8 text-slate-400 hover:text-white text-xs font-bold transition-all cursor-pointer"
+                className="flex-grow py-3 rounded-xl border border-white/10 text-slate-400 hover:text-white text-xs font-bold transition-all cursor-pointer"
               >
                 Cancel
               </button>
@@ -909,10 +926,10 @@ KARE IEEE EDUCATION SOCIETY`;
       {/* Role & Due Date Selection Approval Modal */}
       {approvalModalData && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-sm p-4 overflow-y-auto">
-          <div className="glass-panel w-full max-w-4xl border-white/8 bg-[#0A192F] shadow-2xl p-6 sm:p-8 relative max-h-[90vh] overflow-y-auto">
+          <div className="glass-panel-dark w-full max-w-4xl border-white/10 bg-[#0F0000] shadow-2xl p-6 sm:p-8 relative max-h-[90vh] overflow-y-auto">
             
             {/* Header */}
-            <div className="flex items-center justify-between border-b border-white/5 pb-4 mb-6">
+            <div className="flex items-center justify-between border-b border-white/10 pb-4 mb-6">
               <div className="flex items-center space-x-3">
                 <div className="p-2.5 rounded-xl bg-emerald-950/40 text-emerald-400 border border-emerald-500/30">
                   <FaUserCheck size={18} />
@@ -922,7 +939,7 @@ KARE IEEE EDUCATION SOCIETY`;
                     Select Role & Approve: {approvalModalData.name}
                   </h3>
                   <p className="text-slate-400 text-xs mt-0.5 font-semibold">
-                    Send Appointment Order via Brevo & WhatsApp Greeting
+                    Send Appointment Order via WhatsApp
                   </p>
                 </div>
               </div>
@@ -948,7 +965,7 @@ KARE IEEE EDUCATION SOCIETY`;
                   <select
                     value={approvedRole}
                     onChange={(e) => setApprovedRole(e.target.value)}
-                    className="w-full bg-[#020C1B] border border-white/8 rounded-xl px-4 py-3 text-sm font-semibold text-white focus:outline-none focus:border-ieee-accent transition-all cursor-pointer"
+                    className="w-full bg-[#0F0000] border border-white/10 rounded-xl px-4 py-3 text-sm font-semibold text-white focus:outline-none focus:border-[#FF6B00] transition-all cursor-pointer"
                   >
                     {ROLE_OPTIONS.map((r) => (
                       <option key={r} value={r}>
@@ -976,125 +993,71 @@ KARE IEEE EDUCATION SOCIETY`;
                     </div>
                   </div>
                 </div>
-
               </div>
 
-              {/* Right Column: Previews Tab Panel (7/12 cols) */}
+              {/* Previews Tab Panel */}
               <div className="lg:col-span-7 flex flex-col h-full min-h-[300px]">
                 
-                {/* Preview Tabs */}
-                <div className="flex space-x-2 border-b border-white/5 pb-2.5 mb-4">
-                  <button
-                    type="button"
-                    onClick={() => setPreviewTab("email")}
-                    className={`px-4 py-2 rounded-lg font-bold text-xs uppercase tracking-wider transition-all flex items-center space-x-2 ${
-                      previewTab === "email"
-                        ? "bg-ieee-blue text-white shadow-md"
-                        : "text-slate-400 hover:text-white hover:bg-white/3"
-                    }`}
-                  >
-                    <FaEnvelope size={12} />
-                    <span>Email Order Preview</span>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setPreviewTab("whatsapp")}
-                    className={`px-4 py-2 rounded-lg font-bold text-xs uppercase tracking-wider transition-all flex items-center space-x-2 ${
-                      previewTab === "whatsapp"
-                        ? "bg-emerald-600 text-white shadow-md"
-                        : "text-slate-400 hover:text-white hover:bg-white/3"
-                    }`}
-                  >
-                    <FaWhatsapp size={12} />
-                    <span>WhatsApp Preview</span>
-                  </button>
+                {/* Preview Header */}
+                <div className="flex items-center space-x-2 border-b border-white/10 pb-2.5 mb-4 text-xs font-bold uppercase tracking-wider text-emerald-400">
+                  <FaWhatsapp size={14} />
+                  <span>WhatsApp Appointment Order Preview</span>
                 </div>
 
                 {/* Previews Box */}
-                <div className="flex-grow bg-[#020C1B] border border-white/5 rounded-2xl p-5 overflow-y-auto max-h-[350px]">
+                <div className="flex-grow bg-[#0F0000] border border-white/10 rounded-2xl p-5 overflow-y-auto max-h-[350px]">
                   
-                  {previewTab === "email" ? (
-                    // Email Preview Mock
-                    <div className="space-y-4 font-sans text-slate-300 text-xs">
-                      <div className="border-b border-white/5 pb-3">
-                        <div className="flex justify-between mb-1">
-                          <span className="text-slate-500">Sender:</span>
-                          <span className="text-white font-semibold">ieee.edusoc.kare@gmail.com</span>
-                        </div>
-                        <div className="flex justify-between mb-1">
-                          <span className="text-slate-500">To:</span>
-                          <span className="text-white font-semibold truncate max-w-[200px]">{approvalModalData.email}</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-slate-500">Subject:</span>
-                          <span className="text-ieee-accent font-semibold truncate max-w-[250px]">
-                            Appointment Order: Selection for {approvedRole}
-                          </span>
-                        </div>
+                  {/* WhatsApp Chat Mock Preview */}
+                  <div className="space-y-4 font-sans text-xs flex flex-col justify-end h-full">
+                    <div className="bg-emerald-950/20 border border-emerald-500/20 text-emerald-400 p-2.5 rounded-lg flex items-center space-x-2 mb-2 font-bold text-[10px] uppercase tracking-wider">
+                      <FaWhatsapp size={14} />
+                      <span>Pre-typed message layout:</span>
+                    </div>
+                    
+                    {/* Chat Bubbles */}
+                    <div className="flex flex-col space-y-3">
+                      <div className="self-end bg-[#056162] text-white p-3 rounded-lg rounded-tr-none shadow-md max-w-[85%] space-y-2 font-mono whitespace-pre-line text-[11px] leading-relaxed border border-emerald-500/10">
+                        {`*CSI KARE STUDENT CHAPTER*
+Kalasalingam Academy of Research and Education
+
+*OFFICIAL APPOINTMENT ORDER*
+--------------------------------------------------
+*REF NO:* CSI-KARE-SC-${new Date().getFullYear()}-${(approvalModalData.registrationNumber || "").substring(Math.max(0, (approvalModalData.registrationNumber || "").length - 4))}
+*DATE:* ${new Date().toLocaleDateString("en-IN", { day: "2-digit", month: "long", year: "numeric" })}
+--------------------------------------------------
+
+Dear ${approvalModalData.name},
+
+Based on your performance in the recruitment interviews and evaluations held by the Executive Board, we are pleased to inform you that you have been selected to join the core team of *CSI KARE STUDENT CHAPTER* for the academic year 2026-2027.
+
+You are hereby appointed to the following position with immediate effect:
+
+• *Appointee Name:* ${approvalModalData.name}
+• *Assigned Role/Domain:* *${approvedRole}*
+• *Organization:* CSI KARE STUDENT CHAPTER
+
+As a core committee member, you will be expected to work collaboratively with your team members, demonstrate leadership quality, and actively contribute to the workshops, technical events, and initiatives organized by the chapter.
+
+Please join our official WhatsApp group for recruitment updates, onboarding details, and task assignments:
+👉 https://chat.whatsapp.com/JIHcHWvPznSECokEFz8aln?s=cl&p=a&ilr=1
+
+*Dr. P. Pandiselvam*
+CSI KARE
+
+Congratulations once again! We look forward to an outstanding tenure working together to drive academic and technical excellence.
+
+Regards,
+*CSI KARE STUDENT CHAPTER*`}
                       </div>
-
-                      {/* Mock Appointment Order */}
-                      <div className="bg-white text-slate-800 p-6 rounded-lg shadow-inner max-w-md mx-auto space-y-4">
-                        <div className="text-center border-b border-slate-200 pb-3">
-                          <strong className="text-[11px] uppercase tracking-wider text-slate-900 block font-extrabold">
-                            KARE IEEE Education Society
-                          </strong>
-                          <span className="text-[9px] text-slate-500 font-semibold block">
-                            Kalasalingam Academy of Research and Education
-                          </span>
-                        </div>
-                        
-                        <div className="text-center font-bold text-slate-900 text-xs uppercase tracking-widest underline decoration-2">
-                          Official Appointment Order
-                        </div>
-
-                        <div className="space-y-2 text-[10px] leading-relaxed text-slate-700">
-                          <p className="font-bold text-slate-900 m-0">Dear {approvalModalData.name},</p>
-                          <p className="m-0 text-justify">
-                            We are pleased to inform you that you have been selected to join the core team of <strong>KARE IEEE Education Society</strong> for the academic year 2026-2027.
-                          </p>
-                          
-                          <div className="bg-slate-50 border border-slate-200 rounded p-2.5 my-3 space-y-1">
-                            <div className="flex justify-between">
-                              <span className="text-slate-500 font-semibold">Assigned Role:</span>
-                              <strong className="text-slate-900">{approvedRole}</strong>
-                            </div>
-                          </div>
-
-                          <p className="m-0 text-justify">
-                            Please note that onboarding details and task assignments will be coordinated through our WhatsApp group.
-                          </p>
-                        </div>
+                      <div className="self-end text-[9px] text-slate-500 pr-1 select-none">
+                        Delivered • Message ready to send
                       </div>
                     </div>
-                  ) : (
-                    // WhatsApp Chat Mock Preview
-                    <div className="space-y-4 font-sans text-xs flex flex-col justify-end h-full">
-                      <div className="bg-emerald-950/20 border border-emerald-500/20 text-emerald-400 p-2.5 rounded-lg flex items-center space-x-2 mb-2 font-bold text-[10px] uppercase tracking-wider">
-                        <FaWhatsapp size={14} />
-                        <span>Pre-typed message layout:</span>
-                      </div>
-                      
-                      {/* Chat Bubbles */}
-                      <div className="flex flex-col space-y-3">
-                        <div className="self-end bg-[#056162] text-white p-3 rounded-lg rounded-tr-none shadow-md max-w-[85%] space-y-2 font-mono whitespace-pre-line text-[11px] leading-relaxed border border-emerald-500/10">
-                          {`Hello ${approvalModalData.name} 👋,
-
-Congratulations! You have been selected for the role of *${approvedRole}* in the *KARE IEEE Education Society*.
-
-We look forward to working with you!`}
-                        </div>
-                        <div className="self-end text-[9px] text-slate-500 pr-1 select-none">
-                          Delivered • Message ready to send
-                        </div>
-                      </div>
-                    </div>
-                  )}
+                  </div>
 
                 </div>
 
               </div>
-
             </div>
 
             {/* Footer buttons */}
@@ -1116,18 +1079,7 @@ We look forward to working with you!`}
                 <FaWhatsapp size={14} />
                 <span>{actionLoading ? "Processing..." : "Approve & Send WhatsApp"}</span>
               </button>
-
-              <button
-                type="button"
-                onClick={() => handleConfirmApproval(false)}
-                disabled={actionLoading}
-                className="w-full sm:w-auto py-3 px-6 rounded-xl bg-ieee-blue hover:bg-ieee-light text-white font-bold text-xs flex items-center justify-center space-x-2 transition-all cursor-pointer border border-ieee-accent/25 shadow-md shadow-ieee-blue/20"
-              >
-                <FaEnvelope size={14} />
-                <span>{actionLoading ? "Processing..." : "Approve & Email Only"}</span>
-              </button>
             </div>
-
           </div>
         </div>
       )}

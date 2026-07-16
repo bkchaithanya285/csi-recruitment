@@ -11,9 +11,32 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
-// Initialize Firebase only once
-const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+let app, auth, db;
+
+const isPlaceholder = !firebaseConfig.apiKey || firebaseConfig.apiKey.includes("your-api-key-here");
+
+if (!isPlaceholder) {
+  try {
+    app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
+    auth = getAuth(app);
+    db = getFirestore(app);
+  } catch (error) {
+    console.error("Firebase client initialization failed:", error);
+  }
+}
+
+if (!app) {
+  console.warn("Using Firebase Client Mock fallbacks due to placeholder credentials.");
+  app = {};
+  auth = {
+    onAuthStateChanged: (callback) => {
+      // Trigger callback with null user immediately to allow app rendering
+      setTimeout(() => callback(null), 10);
+      return () => {};
+    },
+    currentUser: null,
+  };
+  db = {};
+}
 
 export { app, auth, db };

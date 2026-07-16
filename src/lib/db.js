@@ -2,7 +2,6 @@
 
 import { adminDb } from "./firebaseAdmin";
 import admin from "firebase-admin";
-import { sendEmail, getSubmissionEmailHtml, getSelectionEmailHtml } from "./email";
 
 /**
  * Checks if a registration number already exists in the Applicants collection.
@@ -67,17 +66,6 @@ export async function submitApplicant(data) {
   
   const docRef = await adminDb.collection("Applicants").add(payload);
 
-  // Send submission email using Brevo
-  try {
-    await sendEmail({
-      to: payload.email,
-      toName: payload.name,
-      subject: "Application Submitted Successfully - KARE IEEE Education Society",
-      htmlContent: await getSubmissionEmailHtml(payload.name)
-    });
-  } catch (emailError) {
-    console.error("Failed to send submission email:", emailError);
-  }
 
   return { id: docRef.id };
 }
@@ -149,21 +137,6 @@ export async function approveApplicantWithRole(id, role) {
       status: "approved",
       approvedRole: role
     });
-
-    const doc = await docRef.get();
-    const appData = doc.data();
-    if (appData && appData.email) {
-      await sendEmail({
-        to: appData.email,
-        toName: appData.name,
-        subject: `Appointment Order: Selection for ${role} - KARE IEEE Education Society`,
-        htmlContent: await getSelectionEmailHtml({
-          id: id,
-          name: appData.name,
-          role: role
-        })
-      });
-    }
 
     return { success: true };
   } catch (error) {

@@ -108,9 +108,9 @@ export default function AdminDashboard({ logout, userEmail }) {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#020C1B]">
+      <div className="min-h-screen flex items-center justify-center bg-[#0F0000]">
         <div className="flex flex-col items-center space-y-4">
-          <FaSpinner className="animate-spin text-ieee-accent text-4xl" />
+          <FaSpinner className="animate-spin text-[#FF6B00] text-4xl" />
           <p className="text-slate-400 text-sm font-semibold tracking-wider">
             Synchronising Database...
           </p>
@@ -120,13 +120,13 @@ export default function AdminDashboard({ logout, userEmail }) {
   }
 
   return (
-    <div className="min-h-screen bg-[#020c1b] py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-b from-[#0F0000] via-[#1E0000] to-[#0A0000] py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto space-y-8 pt-10">
         
         {/* Header Panel */}
-        <div className="glass-panel p-6 border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4 bg-[#0A192F]/40 shadow-xl">
+        <div className="glass-panel-dark p-6 border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 bg-[#1E0000]/20 shadow-xl">
           <div className="flex items-center space-x-3 text-center sm:text-left">
-            <div className="p-2.5 rounded-xl bg-ieee-blue/20 text-ieee-accent border border-ieee-blue/30 shadow-[0_0_15px_rgba(0,180,255,0.15)]">
+            <div className="p-2.5 rounded-xl bg-[#800000]/20 text-[#FF6B00] border border-[#800000]/30 shadow-[0_0_15px_rgba(255,107,0,0.15)]">
               <FaShieldAlt size={20} />
             </div>
             <div>
@@ -171,7 +171,7 @@ export default function AdminDashboard({ logout, userEmail }) {
 
         {/* Applicant list with searches, pagination and actions */}
         <div className="space-y-4">
-          <h2 className="text-lg font-extrabold text-white tracking-wider uppercase pl-3 border-l-2 border-ieee-accent">
+          <h2 className="text-lg font-extrabold text-white tracking-wider uppercase pl-3 border-l-2 border-[#FF6B00]">
             Applications Registry
           </h2>
           <ApplicantTable 
