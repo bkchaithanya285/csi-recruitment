@@ -80,7 +80,7 @@ export async function sendEmail({ to, toName, subject, htmlContent }) {
  * Generates a submission confirmation HTML.
  */
 export async function getSubmissionEmailHtml(name) {
-  const whatsappLink = "https://chat.whatsapp.com/JIHcHWvPznSECokEFz8aln?s=cl&p=a&ilr=1";
+  const whatsappLink = "https://chat.whatsapp.com/BACSzvXP7F9HvD7kFfAjit?s=cl&p=a&ilr=1&amv=2";
   const logoUrl = await getLogoUrl();
 
   return `

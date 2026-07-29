@@ -93,7 +93,7 @@ export default function ApplicationForm() {
   const handleWhatsappJoin = () => {
     localStorage.setItem("whatsappJoined", "true");
     setWhatsappJoined(true);
-    window.open("https://chat.whatsapp.com/JIHcHWvPznSECokEFz8aln?s=cl&p=a&ilr=1", "_blank");
+    window.open("https://chat.whatsapp.com/BACSzvXP7F9HvD7kFfAjit?s=cl&p=a&ilr=1&amv=2", "_blank");
     addToast("Official WhatsApp group link opened!", "info");
   };
 
