@@ -269,7 +269,59 @@ Regards,
   };
 
   const handleSendWhatsApp = (app) => {
-    const rawMessage = `Hello ${app.name} 👋
+    const originUrl = typeof window !== "undefined" ? window.location.origin : "https://csi-recruitment-36336.web.app";
+    const downloadUrl = `${originUrl}/api/download-letter?id=${app.id}`;
+    
+    let rawMessage = "";
+    if (app.status === "approved") {
+      const appYear = app.timestamp && app.timestamp.toDate 
+        ? app.timestamp.toDate().getFullYear() 
+        : new Date().getFullYear();
+      const regNoStr = app.registrationNumber || "";
+      const refNumber = `CSI-KARE-SC-${appYear}-${regNoStr.substring(Math.max(0, regNoStr.length - 4))}`;
+      const currentDate = new Date().toLocaleDateString("en-IN", {
+        day: "2-digit",
+        month: "long",
+        year: "numeric"
+      });
+      const assignedRole = app.approvedRole || app.priority1 || "Core Member";
+
+      rawMessage = `*CSI KARE STUDENT CHAPTER*
+Kalasalingam Academy of Research and Education
+
+*OFFICIAL APPOINTMENT ORDER*
+--------------------------------------------------
+*REF NO:* ${refNumber}
+*DATE:* ${currentDate}
+--------------------------------------------------
+
+Dear ${app.name},
+
+Based on your performance in the recruitment interviews and evaluations held by the Executive Board, we are pleased to inform you that you have been selected to join the core team of *CSI KARE STUDENT CHAPTER* for the academic year 2026-2027.
+
+You are hereby appointed to the following position with immediate effect:
+
+• *Appointee Name:* ${app.name}
+• *Assigned Role/Domain:* *${assignedRole}*
+• *Organization:* CSI KARE STUDENT CHAPTER
+
+As a core committee member, you will be expected to work collaboratively with your team members, demonstrate leadership quality, and actively contribute to the workshops, technical events, and initiatives organized by the chapter.
+
+Please join our official WhatsApp group for recruitment updates, onboarding details, and task assignments:
+👉 https://chat.whatsapp.com/BACSzvXP7F9HvD7kFfAjit?s=cl&p=a&ilr=1&amv=2
+
+📄 *Download Official Appointment Order:*
+${downloadUrl}
+
+*Dr. P. Pandiselvam*
+CSI KARE
+
+Congratulations once again! We look forward to an outstanding tenure working together to drive academic and technical excellence.
+
+Regards,
+*CSI KARE STUDENT CHAPTER*`;
+    } else {
+      rawMessage = `Hello ${app.name} 👋
 
 Welcome to *CSI KARE STUDENT CHAPTER*.
 
@@ -284,6 +336,7 @@ We are excited to have you with us.
 
 Regards,
 CSI KARE STUDENT CHAPTER`;
+    }
 
     const encodedMessage = encodeURIComponent(rawMessage);
     const link = `https://wa.me/91${app.phone}?text=${encodedMessage}`;
