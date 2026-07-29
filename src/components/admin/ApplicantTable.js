@@ -22,10 +22,10 @@ import { updateApplicantStatus, deleteApplicant, approveApplicantWithRole } from
 import { useToast } from "@/context/ToastContext";
 import { jsPDF } from "jspdf";
 
-const DEPT_OPTIONS = ["CSE", "ECE", "OTHER"];
-const YEAR_OPTIONS = ["2nd Year", "3rd Year"];
-const STATUS_OPTIONS = ["pending", "approved", "rejected"];
-const ROLE_OPTIONS = [
+export const DEPT_OPTIONS = ["CSE", "ECE", "OTHER"];
+export const YEAR_OPTIONS = ["2nd Year", "3rd Year"];
+export const STATUS_OPTIONS = ["pending", "approved", "rejected"];
+export const ROLE_OPTIONS = [
   "Web Development Team",
   "AI & Machine Learning Team",
   "Technical Team",
@@ -46,6 +46,7 @@ export default function ApplicantTable({ applicants, onFilteredChange, refreshDa
   const [yearFilter, setYearFilter] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
   const [roleFilter, setRoleFilter] = useState("");
+  const [approvedRoleFilter, setApprovedRoleFilter] = useState("");
 
   // Sorting state
   const [sortBy, setSortBy] = useState("timestamp"); // 'timestamp', 'name', 'registrationNumber'
@@ -65,6 +66,25 @@ export default function ApplicantTable({ applicants, onFilteredChange, refreshDa
   const [approvedRole, setApprovedRole] = useState("");
   const [previewTab, setPreviewTab] = useState("whatsapp"); // Default to WhatsApp
 
+  // Role-wise approved counts calculation
+  const approvedRoleCounts = useMemo(() => {
+    const counts = {};
+    ROLE_OPTIONS.forEach((role) => {
+      counts[role] = 0;
+    });
+    applicants.forEach((app) => {
+      if (app.status === "approved") {
+        const role = app.approvedRole || app.priority1 || "Core Member";
+        counts[role] = (counts[role] || 0) + 1;
+      }
+    });
+    return counts;
+  }, [applicants]);
+
+  const totalApprovedCount = useMemo(() => {
+    return applicants.filter((a) => a.status === "approved").length;
+  }, [applicants]);
+
   // Apply filters, searches, and sorts
   const processedApplicants = useMemo(() => {
     const filtered = applicants.filter((app) => {
@@ -83,7 +103,12 @@ export default function ApplicantTable({ applicants, onFilteredChange, refreshDa
           app.priority3 === roleFilter
         : true;
 
-      return matchesSearch && matchesDept && matchesYear && matchesStatus && matchesRole;
+      const appApprovedRole = app.approvedRole || (app.status === "approved" ? app.priority1 : "");
+      const matchesApprovedRole = approvedRoleFilter
+        ? app.status === "approved" && appApprovedRole === approvedRoleFilter
+        : true;
+
+      return matchesSearch && matchesDept && matchesYear && matchesStatus && matchesRole && matchesApprovedRole;
     });
 
     const sorted = [...filtered].sort((a, b) => {
@@ -105,12 +130,7 @@ export default function ApplicantTable({ applicants, onFilteredChange, refreshDa
     });
 
     return sorted;
-  }, [applicants, search, deptFilter, yearFilter, statusFilter, roleFilter, sortBy, sortOrder]);
-  const totalPages = Math.ceil(processedApplicants.length / itemsPerPage);
-  const paginatedApplicants = processedApplicants.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
+  }, [applicants, search, deptFilter, yearFilter, statusFilter, roleFilter, approvedRoleFilter, sortBy, sortOrder]);
 
   // Notify parent of filter updates for export synchronization
   useEffect(() => {
@@ -635,6 +655,72 @@ CSI KARE STUDENT CHAPTER`;
 
   return (
     <div className="space-y-6">
+
+      {/* Role-Wise Approved Counts & Quick Filters Bar */}
+      <div className="glass-panel-dark p-5 border-white/10 bg-[#1E0000]/30 shadow-lg space-y-3">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 border-b border-white/5 pb-3">
+          <div className="flex items-center space-x-2 text-xs font-bold uppercase tracking-wider text-emerald-400">
+            <FaUserCheck size={14} />
+            <span>Role-Wise Approved Candidates Breakdown</span>
+            <span className="ml-2 px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] font-extrabold border border-emerald-500/30">
+              {totalApprovedCount} Total Approved
+            </span>
+          </div>
+          {approvedRoleFilter && (
+            <button
+              onClick={() => setApprovedRoleFilter("")}
+              className="text-[11px] text-emerald-400 hover:text-white font-semibold underline transition-colors cursor-pointer"
+            >
+              Reset Approved Role Filter
+            </button>
+          )}
+        </div>
+
+        {/* Quick Filter Pills */}
+        <div className="flex flex-wrap gap-2 pt-1">
+          <button
+            onClick={() => setApprovedRoleFilter("")}
+            className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer border ${
+              !approvedRoleFilter
+                ? "bg-emerald-600 text-white border-emerald-500 shadow-md shadow-emerald-950/40"
+                : "bg-[#0F0000] border-white/10 text-slate-300 hover:border-emerald-500/40 hover:text-white"
+            }`}
+          >
+            All Approved ({totalApprovedCount})
+          </button>
+
+          {ROLE_OPTIONS.map((role) => {
+            const count = approvedRoleCounts[role] || 0;
+            const isSelected = approvedRoleFilter === role;
+            return (
+              <button
+                key={role}
+                onClick={() => setApprovedRoleFilter(isSelected ? "" : role)}
+                className={`px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center space-x-2 transition-all cursor-pointer border ${
+                  isSelected
+                    ? "bg-emerald-600 text-white border-emerald-500 shadow-md shadow-emerald-950/50 ring-2 ring-emerald-400/30"
+                    : count > 0
+                    ? "bg-emerald-950/40 border-emerald-500/30 text-emerald-300 hover:bg-emerald-900/60 hover:border-emerald-400/50"
+                    : "bg-[#0F0000] border-white/10 text-slate-500 hover:text-slate-300 hover:border-white/20"
+                }`}
+              >
+                <span>{role}</span>
+                <span
+                  className={`px-1.5 py-0.5 rounded-full text-[10px] font-bold ${
+                    isSelected
+                      ? "bg-white/25 text-white"
+                      : count > 0
+                      ? "bg-emerald-500/25 text-emerald-300 border border-emerald-500/30"
+                      : "bg-white/5 text-slate-500"
+                  }`}
+                >
+                  {count}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
       
       {/* Search and Filters Bar */}
       <div className="glass-panel-dark p-5 space-y-4 border-white/10 bg-[#1E0000]/20 shadow-lg">
@@ -652,7 +738,7 @@ CSI KARE STUDENT CHAPTER`;
         </div>
 
         {/* Filters Select Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
           
           {/* Department */}
           <div className="flex flex-col">
@@ -664,7 +750,7 @@ CSI KARE STUDENT CHAPTER`;
               onChange={(e) => setDeptFilter(e.target.value)}
               className="bg-[#0F0000] border border-white/10 rounded-xl px-3 py-2 text-xs font-semibold text-white focus:outline-none focus:border-[#FF6B00] transition-all cursor-pointer"
             >
-              <option value="">All Departments</option>
+              <option value="">All Depts</option>
               {DEPT_OPTIONS.map(d => <option key={d} value={d}>{d}</option>)}
             </select>
           </div>
@@ -694,8 +780,27 @@ CSI KARE STUDENT CHAPTER`;
               onChange={(e) => setRoleFilter(e.target.value)}
               className="bg-[#0F0000] border border-white/10 rounded-xl px-3 py-2 text-xs font-semibold text-white focus:outline-none focus:border-[#FF6B00] transition-all cursor-pointer"
             >
-              <option value="">All Roles</option>
+              <option value="">All Applied Roles</option>
               {ROLE_OPTIONS.map(r => <option key={r} value={r}>{r}</option>)}
+            </select>
+          </div>
+
+          {/* Approved Role Filter */}
+          <div className="flex flex-col">
+            <label className="text-emerald-400 text-[10px] font-semibold tracking-wider uppercase mb-1.5 flex items-center gap-1.5">
+              <FaUserCheck size={10} /> Approved Role
+            </label>
+            <select
+              value={approvedRoleFilter}
+              onChange={(e) => setApprovedRoleFilter(e.target.value)}
+              className="bg-[#0F0000] border border-emerald-500/30 rounded-xl px-3 py-2 text-xs font-semibold text-emerald-300 focus:outline-none focus:border-emerald-400 transition-all cursor-pointer"
+            >
+              <option value="">All Approved Roles</option>
+              {ROLE_OPTIONS.map(r => (
+                <option key={r} value={r}>
+                  {r} ({approvedRoleCounts[r] || 0})
+                </option>
+              ))}
             </select>
           </div>
 

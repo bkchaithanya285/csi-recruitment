@@ -7,6 +7,8 @@ import StatsPanel from "./StatsPanel";
 import ExportPanel from "./ExportPanel";
 import ApplicantTable from "./ApplicantTable";
 
+import { ROLE_OPTIONS } from "./ApplicantTable";
+
 export default function AdminDashboard({ logout, userEmail }) {
   const [applicants, setApplicants] = useState([]);
   const [filteredApplicants, setFilteredApplicants] = useState([]);
@@ -61,7 +63,12 @@ export default function AdminDashboard({ logout, userEmail }) {
       department: { CSE: 0, ECE: 0, OTHER: 0 },
       year: { "2nd Year": 0, "3rd Year": 0 },
       role: {},
+      approvedRoles: {},
     };
+
+    ROLE_OPTIONS.forEach((role) => {
+      distributions.approvedRoles[role] = 0;
+    });
 
     const todayDateStr = new Date().toDateString();
 
@@ -69,6 +76,8 @@ export default function AdminDashboard({ logout, userEmail }) {
       // Status counters
       if (app.status === "approved") {
         stats.approved++;
+        const approvedR = app.approvedRole || app.priority1 || "Core Member";
+        distributions.approvedRoles[approvedR] = (distributions.approvedRoles[approvedR] || 0) + 1;
       } else if (app.status === "rejected") {
         stats.rejected++;
       } else {

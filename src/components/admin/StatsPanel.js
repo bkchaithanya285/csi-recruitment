@@ -128,6 +128,56 @@ export default function StatsPanel({ stats, distributions }) {
         </div>
 
       </div>
+
+      {/* Role-Wise Approved Candidates Breakdown Panel */}
+      <div className="glass-panel-dark p-6 border-white/10 bg-[#1E0000]/20 shadow-xl">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b border-white/10 pb-4 mb-6 gap-2">
+          <div className="flex items-center space-x-3">
+            <div className="p-2 rounded-lg bg-emerald-950/60 border border-emerald-500/30 text-emerald-400">
+              <FaUserCheck size={16} />
+            </div>
+            <div>
+              <h4 className="text-white font-extrabold text-sm uppercase tracking-wider">
+                Approved Candidates Count by Role
+              </h4>
+              <p className="text-slate-400 text-xs mt-0.5">
+                Breakdown of officially appointed members across chapter domains
+              </p>
+            </div>
+          </div>
+          <span className="px-3 py-1 rounded-full bg-emerald-950/80 border border-emerald-500/40 text-emerald-400 text-xs font-bold uppercase tracking-wider shadow-sm">
+            {stats.approved} Total Approved
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {distributions.approvedRoles && Object.entries(distributions.approvedRoles).map(([role, count]) => {
+            const pct = stats.approved > 0 ? Math.round((count / stats.approved) * 100) : 0;
+            return (
+              <div key={role} className="bg-[#0F0000] border border-white/10 p-4 rounded-xl space-y-2 flex flex-col justify-between hover:border-emerald-500/30 transition-all">
+                <div className="flex items-start justify-between gap-2">
+                  <span className="text-slate-300 text-xs font-bold leading-snug">{role}</span>
+                  <span className="px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 text-xs font-extrabold shrink-0 border border-emerald-500/30">
+                    {count}
+                  </span>
+                </div>
+                <div className="space-y-1">
+                  <div className="flex items-center justify-between text-[10px] text-slate-400 font-semibold">
+                    <span>% of Approved</span>
+                    <span className="text-emerald-400">{pct}%</span>
+                  </div>
+                  <div className="w-full h-1.5 rounded-full bg-white/5 overflow-hidden">
+                    <div
+                      className="h-full rounded-full bg-gradient-to-r from-emerald-600 to-teal-400 transition-all duration-500"
+                      style={{ width: `${pct}%` }}
+                    />
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 }
