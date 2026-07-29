@@ -391,16 +391,15 @@ CSI KARE STUDENT CHAPTER`;
         signatureBase64 = await loadImageBase64("/signature.jpg");
       } catch (err) { console.error("Signature load failed", err); }
 
-      // --- WATERMARK ---
-      if (officialLogoBase64 || primaryLogoBase64) {
+      // --- WATERMARK (csi-logo.jpg) ---
+      if (primaryLogoBase64) {
         try {
           if (doc.GState) {
             doc.setGState(new doc.GState({ opacity: 0.08 }));
           }
-          const wmLogo = officialLogoBase64 || primaryLogoBase64;
           const wmW = 110;
           const wmH = 110;
-          doc.addImage(wmLogo, "PNG", (pageWidth - wmW) / 2, (pageHeight - wmH) / 2, wmW, wmH);
+          doc.addImage(primaryLogoBase64, "PNG", (pageWidth - wmW) / 2, (pageHeight - wmH) / 2, wmW, wmH);
           if (doc.GState) {
             doc.setGState(new doc.GState({ opacity: 1.0 }));
           }

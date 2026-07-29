@@ -61,17 +61,16 @@ export async function GET(request) {
       console.error("Server PDF: Error reading image assets:", err);
     }
 
-    // --- WATERMARK ---
-    if (officialLogoBase64 || primaryLogoBase64) {
+    // --- WATERMARK (csi-logo.jpg) ---
+    if (primaryLogoBase64) {
       try {
         if (doc.GState) {
           doc.setGState(new doc.GState({ opacity: 0.08 }));
         }
-        const wmLogo = officialLogoBase64 ? `data:image/png;base64,${officialLogoBase64}` : `data:image/jpeg;base64,${primaryLogoBase64}`;
-        const wmType = officialLogoBase64 ? "PNG" : "JPEG";
+        const wmLogo = `data:image/jpeg;base64,${primaryLogoBase64}`;
         const wmW = 110;
         const wmH = 110;
-        doc.addImage(wmLogo, wmType, (pageWidth - wmW) / 2, (pageHeight - wmH) / 2, wmW, wmH);
+        doc.addImage(wmLogo, "JPEG", (pageWidth - wmW) / 2, (pageHeight - wmH) / 2, wmW, wmH);
         if (doc.GState) {
           doc.setGState(new doc.GState({ opacity: 1.0 }));
         }
