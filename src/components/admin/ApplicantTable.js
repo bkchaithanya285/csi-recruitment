@@ -87,11 +87,17 @@ export default function ApplicantTable({ applicants, onFilteredChange, refreshDa
 
   // Apply filters, searches, and sorts
   const processedApplicants = useMemo(() => {
-    const filtered = applicants.filter((app) => {
+    const searchLower = (search || "").toLowerCase();
+    const filtered = (applicants || []).filter((app) => {
+      if (!app) return false;
+      const appName = (app.name || "").toLowerCase();
+      const appReg = (app.registrationNumber || "").toLowerCase();
+      const appPhone = (app.phone || "").toString();
+
       const matchesSearch =
-        app.name.toLowerCase().includes(search.toLowerCase()) ||
-        app.registrationNumber.toLowerCase().includes(search.toLowerCase()) ||
-        app.phone.includes(search);
+        appName.includes(searchLower) ||
+        appReg.includes(searchLower) ||
+        appPhone.includes(searchLower);
 
       const matchesDept = deptFilter ? app.department === deptFilter : true;
       const matchesYear = yearFilter ? app.year === yearFilter : true;
@@ -872,7 +878,7 @@ CSI KARE STUDENT CHAPTER`;
 
                   {/* Class Info */}
                   <td className="py-4 px-4 font-medium">
-                    {app.year.split(" ")[0]} / {app.department} / Sec {app.section}
+                    {(app.year || "N/A").split(" ")[0]} / {app.department || "N/A"} / Sec {app.section || "N/A"}
                   </td>
 
                   {/* Contact Info */}

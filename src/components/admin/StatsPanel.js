@@ -2,13 +2,28 @@
 
 import { FaUsers, FaUserClock, FaUserCheck, FaUserTimes, FaCalendarDay } from "react-icons/fa";
 
-export default function StatsPanel({ stats, distributions }) {
+export default function StatsPanel({ stats = {}, distributions = {} }) {
+  const safeStats = {
+    total: stats?.total || 0,
+    today: stats?.today || 0,
+    pending: stats?.pending || 0,
+    approved: stats?.approved || 0,
+    rejected: stats?.rejected || 0,
+  };
+
+  const safeDistributions = {
+    department: distributions?.department || { CSE: 0, ECE: 0, OTHER: 0 },
+    year: distributions?.year || { "2nd Year": 0, "3rd Year": 0 },
+    role: distributions?.role || {},
+    approvedRoles: distributions?.approvedRoles || {},
+  };
+
   const cards = [
-    { label: "Total Applications", value: stats.total, icon: FaUsers, color: "text-[#FF6B00] bg-[#800000]/10 border-[#800000]/20" },
-    { label: "Applications Today", value: stats.today, icon: FaCalendarDay, color: "text-blue-400 bg-blue-950/20 border-blue-500/20" },
-    { label: "Pending Screening", value: stats.pending, icon: FaUserClock, color: "text-amber-400 bg-amber-950/20 border-amber-500/20" },
-    { label: "Approved Candidates", value: stats.approved, icon: FaUserCheck, color: "text-emerald-400 bg-emerald-950/20 border-emerald-500/20" },
-    { label: "Rejected Candidates", value: stats.rejected, icon: FaUserTimes, color: "text-rose-400 bg-rose-950/20 border-rose-500/20" },
+    { label: "Total Applications", value: safeStats.total, icon: FaUsers, color: "text-[#FF6B00] bg-[#800000]/10 border-[#800000]/20" },
+    { label: "Applications Today", value: safeStats.today, icon: FaCalendarDay, color: "text-blue-400 bg-blue-950/20 border-blue-500/20" },
+    { label: "Pending Screening", value: safeStats.pending, icon: FaUserClock, color: "text-amber-400 bg-amber-950/20 border-amber-500/20" },
+    { label: "Approved Candidates", value: safeStats.approved, icon: FaUserCheck, color: "text-emerald-400 bg-emerald-950/20 border-emerald-500/20" },
+    { label: "Rejected Candidates", value: safeStats.rejected, icon: FaUserTimes, color: "text-rose-400 bg-rose-950/20 border-rose-500/20" },
   ];
 
   const getPercentage = (count, total) => {
@@ -52,8 +67,8 @@ export default function StatsPanel({ stats, distributions }) {
             Department Distribution
           </h4>
           <div className="space-y-4">
-            {Object.entries(distributions.department).map(([dept, count]) => {
-              const pct = getPercentage(count, stats.total);
+            {Object.entries(safeDistributions.department).map(([dept, count]) => {
+              const pct = getPercentage(count, safeStats.total);
               return (
                 <div key={dept} className="space-y-2">
                   <div className="flex items-center justify-between text-xs font-semibold">
@@ -78,8 +93,8 @@ export default function StatsPanel({ stats, distributions }) {
             Year Distribution
           </h4>
           <div className="space-y-4">
-            {Object.entries(distributions.year).map(([year, count]) => {
-              const pct = getPercentage(count, stats.total);
+            {Object.entries(safeDistributions.year).map(([year, count]) => {
+              const pct = getPercentage(count, safeStats.total);
               return (
                 <div key={year} className="space-y-2">
                   <div className="flex items-center justify-between text-xs font-semibold">
@@ -104,8 +119,8 @@ export default function StatsPanel({ stats, distributions }) {
             Role Preferences (Priority 1)
           </h4>
           <div className="space-y-4 max-h-[260px] overflow-y-auto pr-1">
-            {Object.entries(distributions.role).sort((a, b) => b[1] - a[1]).map(([role, count]) => {
-              const pct = getPercentage(count, stats.total);
+            {Object.entries(safeDistributions.role).sort((a, b) => b[1] - a[1]).map(([role, count]) => {
+              const pct = getPercentage(count, safeStats.total);
               return (
                 <div key={role} className="space-y-1.5">
                   <div className="flex items-center justify-between text-[11px] font-semibold">
@@ -121,7 +136,7 @@ export default function StatsPanel({ stats, distributions }) {
                 </div>
               );
             })}
-            {Object.keys(distributions.role).length === 0 && (
+            {Object.keys(safeDistributions.role).length === 0 && (
               <p className="text-slate-500 text-xs text-center py-10 font-medium">No roles recorded</p>
             )}
           </div>
@@ -146,13 +161,13 @@ export default function StatsPanel({ stats, distributions }) {
             </div>
           </div>
           <span className="px-3 py-1 rounded-full bg-emerald-950/80 border border-emerald-500/40 text-emerald-400 text-xs font-bold uppercase tracking-wider shadow-sm">
-            {stats.approved} Total Approved
+            {safeStats.approved} Total Approved
           </span>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {distributions.approvedRoles && Object.entries(distributions.approvedRoles).map(([role, count]) => {
-            const pct = stats.approved > 0 ? Math.round((count / stats.approved) * 100) : 0;
+          {Object.entries(safeDistributions.approvedRoles).map(([role, count]) => {
+            const pct = safeStats.approved > 0 ? Math.round((count / safeStats.approved) * 100) : 0;
             return (
               <div key={role} className="bg-[#0F0000] border border-white/10 p-4 rounded-xl space-y-2 flex flex-col justify-between hover:border-emerald-500/30 transition-all">
                 <div className="flex items-start justify-between gap-2">
