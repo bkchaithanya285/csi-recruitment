@@ -738,6 +738,7 @@ CSI KARE STUDENT CHAPTER`;
                 <th className="py-4 px-4">Class (Yr / Dept / Sec)</th>
                 <th className="py-4 px-4">Contact</th>
                 <th className="py-4 px-4">Priority 1 Choice</th>
+                <th className="py-4 px-4 text-emerald-400">Approved Role</th>
                 <th className="py-4 px-4 text-center">Status</th>
                 <th className="py-4 px-6 text-right cursor-pointer hover:text-white" onClick={() => toggleSort("timestamp")}>
                   <div className="flex items-center justify-end gap-1.5">
@@ -777,6 +778,17 @@ CSI KARE STUDENT CHAPTER`;
                   {/* Priority 1 */}
                   <td className="py-4 px-4 font-bold text-white tracking-wide">
                     {app.priority1}
+                  </td>
+
+                  {/* Approved Role */}
+                  <td className="py-4 px-4 font-bold tracking-wide">
+                    {app.status === "approved" ? (
+                      <span className="inline-flex items-center px-2.5 py-1 rounded-lg bg-emerald-950/60 border border-emerald-500/30 text-emerald-300 text-xs font-semibold">
+                        {app.approvedRole || app.priority1 || "Core Member"}
+                      </span>
+                    ) : (
+                      <span className="text-slate-500 text-xs font-normal pl-2">-</span>
+                    )}
                   </td>
 
                   {/* Status Badge */}
@@ -951,6 +963,19 @@ CSI KARE STUDENT CHAPTER`;
                 <span className="text-slate-500 text-[10px] uppercase font-bold tracking-wider">Section</span>
                 <p className="text-white font-semibold">Section {selectedApplicant.section}</p>
               </div>
+
+              {/* Approved Role Highlight Card */}
+              {selectedApplicant.status === "approved" && (
+                <div className="bg-emerald-950/40 border border-emerald-500/30 p-4 rounded-xl sm:col-span-2 flex items-center justify-between shadow-lg shadow-emerald-950/20">
+                  <div>
+                    <span className="text-emerald-400 text-[10px] uppercase font-bold tracking-wider block">Assigned / Approved Role</span>
+                    <p className="text-emerald-300 font-extrabold text-base mt-0.5">{selectedApplicant.approvedRole || selectedApplicant.priority1 || "Core Committee Member"}</p>
+                  </div>
+                  <span className="px-3 py-1 bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 text-xs font-bold rounded-full uppercase tracking-wider">
+                    Official Appointment
+                  </span>
+                </div>
+              )}
 
               {/* Preferences List */}
               <div className="bg-white/2 border border-white/5 p-5 rounded-xl sm:col-span-2 space-y-3">

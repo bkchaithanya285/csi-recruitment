@@ -30,6 +30,7 @@ export default function ExportPanel({ allApplicants, filteredApplicants }) {
       "Priority 1": app.priority1 || "",
       "Priority 2": app.priority2 || "",
       "Priority 3": app.priority3 || "",
+      "Approved Role": app.approvedRole || (app.status === "approved" ? app.priority1 : "-"),
       Status: app.status.toUpperCase(),
       "Applied Date": formatDate(app.timestamp)
     }));
@@ -100,9 +101,8 @@ export default function ExportPanel({ allApplicants, filteredApplicants }) {
         { header: "Sec", dataKey: "Section" },
         { header: "Email", dataKey: "Email" },
         { header: "Phone", dataKey: "Phone Number" },
-        { header: "P1 Priority", dataKey: "Priority 1" },
-        { header: "P2 Priority", dataKey: "Priority 2" },
-        { header: "P3 Priority", dataKey: "Priority 3" },
+        { header: "P1 Choice", dataKey: "Priority 1" },
+        { header: "Approved Role", dataKey: "Approved Role" },
         { header: "Status", dataKey: "Status" },
         { header: "Date", dataKey: "Applied Date" }
       ];
@@ -127,18 +127,17 @@ export default function ExportPanel({ allApplicants, filteredApplicants }) {
           fillColor: [255, 248, 245]
         },
         columnStyles: {
-          Name: { cellWidth: 26 },
+          Name: { cellWidth: 24 },
           "Registration Number": { cellWidth: 22 },
-          Year: { cellWidth: 15 },
-          Department: { cellWidth: 15 },
-          Section: { cellWidth: 10 },
-          Email: { cellWidth: 35 },
-          "Phone Number": { cellWidth: 22 },
-          "Priority 1": { cellWidth: 28 },
-          "Priority 2": { cellWidth: 28 },
-          "Priority 3": { cellWidth: 28 },
+          Year: { cellWidth: 14 },
+          Department: { cellWidth: 14 },
+          Section: { cellWidth: 9 },
+          Email: { cellWidth: 32 },
+          "Phone Number": { cellWidth: 20 },
+          "Priority 1": { cellWidth: 26 },
+          "Approved Role": { cellWidth: 28 },
           Status: { cellWidth: 16, halign: "center" },
-          "Applied Date": { cellWidth: 26 }
+          "Applied Date": { cellWidth: 24 }
         },
         margin: { left: 10, right: 10 },
         didDrawPage: (data) => {
