@@ -12,6 +12,7 @@ const ROLE_OPTIONS = [
   { value: "Web Development Team", label: "Web Development Team" },
   { value: "AI & Machine Learning Team", label: "AI & Machine Learning Team" },
   { value: "Technical Team", label: "Technical Team" },
+  { value: "Research Team", label: "Research Team" },
   { value: "Content Team", label: "Content Team" },
   { value: "Social Media Team", label: "Social Media Team" },
   { value: "Video Editing Team", label: "Video Editing Team" },

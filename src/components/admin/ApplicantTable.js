@@ -29,6 +29,7 @@ const ROLE_OPTIONS = [
   "Web Development Team",
   "AI & Machine Learning Team",
   "Technical Team",
+  "Research Team",
   "Content Team",
   "Social Media Team",
   "Video Editing Team",
