@@ -138,6 +138,14 @@ export default function ApplicantTable({ applicants, onFilteredChange, refreshDa
     return sorted;
   }, [applicants, search, deptFilter, yearFilter, statusFilter, roleFilter, approvedRoleFilter, sortBy, sortOrder]);
 
+  const totalPages = Math.max(1, Math.ceil(processedApplicants.length / itemsPerPage));
+  const paginatedApplicants = useMemo(() => {
+    return processedApplicants.slice(
+      (currentPage - 1) * itemsPerPage,
+      currentPage * itemsPerPage
+    );
+  }, [processedApplicants, currentPage, itemsPerPage]);
+
   // Notify parent of filter updates for export synchronization
   useEffect(() => {
     onFilteredChange(processedApplicants);
